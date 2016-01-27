@@ -3,13 +3,15 @@
  * https://github.com/facebook/react-native
  */
 'use strict';
+
 import React, {
   AppRegistry,
   Component,
   StyleSheet,
   Text,
   View,
-  DrawerLayoutAndroid
+  DrawerLayoutAndroid,
+  ToolbarAndroid
 } from 'react-native';
 
 var SimpleScreenRecorder = React.createClass ({
@@ -27,10 +29,18 @@ var SimpleScreenRecorder = React.createClass ({
           drawerWidth={300}
           drawerPosition={DrawerLayoutAndroid.positions.Left}
           renderNavigationView={() => navigationView}>
-        <View style={{flex:1, backgroundColor: "#F0FF00", alignItems: "center"}}>
-        <Text style={{margin: 5, fontSize: 15, textAlign: "right"}}>
-        HELP!
-      </Text>
+        <View style={{flex:1, backgroundColor: "#FFFFFF", alignItems: "center"}}>
+                <View style={{flexDirection: "row",
+                              backgroundColor: "#FFB700",
+                              alignItems: "center",
+                              alignSelf: "stretch",
+                              height: 40,
+                              justifyContent: "space-between"}}>
+                         <Text style={{margin: 5, fontSize: 15, textAlign: "center"}}>
+                                Help
+                        </Text>
+                </View>
+
        </View>
         </DrawerLayoutAndroid>
     );
