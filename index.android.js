@@ -14,6 +14,15 @@ import React, {
   ToolbarAndroid
 } from 'react-native';
 
+import Icon from "react-native-vector-icons/FontAwesome";
+// var Icon  = require("react-native-vector-icons/FontAwesome");
+// import * as Icon from "react-native-vector-icons/FontAwesome";
+
+// import {FontAwesome as Icon} from "react-native-vector-icons/FontAwesome";
+// import * as Icon from "react-native-vector-icons/FontAwesome";
+// import {Icon} from "react-native-vector-icons/FontAwesome";
+
+// var bars = (<Icon name="rocket" size={30} color="#FFF"/>);
 var SimpleScreenRecorder = React.createClass ({
   render: function () {
     var navigationView = (
@@ -23,6 +32,8 @@ var SimpleScreenRecorder = React.createClass ({
         </Text>
       </View>
     );
+
+    
     
     return (
       <DrawerLayoutAndroid
@@ -35,8 +46,11 @@ var SimpleScreenRecorder = React.createClass ({
                               alignItems: "center",
                               alignSelf: "stretch",
                               height: 40,
-                              justifyContent: "space-between"}}>
+                              justifyContent: "space-around"}}>
+
+                        <Icon name="bars" size={15} color="#000000" />
                          <Text style={{margin: 5, fontSize: 15, textAlign: "center"}}>
+                                
                                 Help
                         </Text>
                 </View>
