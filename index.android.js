@@ -28,7 +28,7 @@ var SimpleScreenRecorder = React.createClass ({
 
   toggleDrawer: function () {
 
-    this.drawer.openDrawer();
+    this.refs['DRAWER'].openDrawer();
   },
   
   render: function () {
@@ -47,7 +47,7 @@ var SimpleScreenRecorder = React.createClass ({
           drawerWidth={300}
           drawerPosition={DrawerLayoutAndroid.positions.Left}
           renderNavigationView={() => navigationView}
-          ref={(component) => this.drawer = component}>
+          ref={'DRAWER'}>
         <View style={{flex:1, backgroundColor: "#FFFFFF", alignItems: "center"}}>
                 <View style={{flexDirection: "row",
                               backgroundColor: "#FFB700",
@@ -56,7 +56,7 @@ var SimpleScreenRecorder = React.createClass ({
                               height: 40,
                               justifyContent: "space-between" }}>
 
-                        <TouchableOpacity onPress={}>
+                        <TouchableOpacity onPress={this.toggleDrawer}>
                                 <Icon name="bars" size={15} color="#000000" style={{marginLeft: 10}}/>
                         </TouchableOpacity>
                          <Text style={{margin: 5, fontSize: 15, textAlign: "center"}}>
