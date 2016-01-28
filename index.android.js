@@ -11,7 +11,8 @@ import React, {
   Text,
   View,
   DrawerLayoutAndroid,
-  ToolbarAndroid
+  ToolbarAndroid,
+  TouchableOpacity
 } from 'react-native';
 
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -24,6 +25,12 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 // var bars = (<Icon name="rocket" size={30} color="#FFF"/>);
 var SimpleScreenRecorder = React.createClass ({
+
+  toggleDrawer: function () {
+
+    this.drawer.openDrawer();
+  },
+  
   render: function () {
     var navigationView = (
       <View style={{flex:1, backgroundColor: "#FFF"}}>
@@ -39,20 +46,24 @@ var SimpleScreenRecorder = React.createClass ({
       <DrawerLayoutAndroid
           drawerWidth={300}
           drawerPosition={DrawerLayoutAndroid.positions.Left}
-          renderNavigationView={() => navigationView}>
+          renderNavigationView={() => navigationView}
+          ref={(component) => this.drawer = component}>
         <View style={{flex:1, backgroundColor: "#FFFFFF", alignItems: "center"}}>
                 <View style={{flexDirection: "row",
                               backgroundColor: "#FFB700",
                               alignItems: "center",
                               alignSelf: "stretch",
                               height: 40,
-                              justifyContent: "space-around"}}>
+                              justifyContent: "space-between" }}>
 
-                        <Icon name="bars" size={15} color="#000000" />
+                        <TouchableOpacity onPress={}>
+                                <Icon name="bars" size={15} color="#000000" style={{marginLeft: 10}}/>
+                        </TouchableOpacity>
                          <Text style={{margin: 5, fontSize: 15, textAlign: "center"}}>
                                 
-                                Help
+                                Simple Screen Recorder
                         </Text>
+                        <Icon name="ellipsis-v" size={15} color="#000000" style={{marginRight: 10}}/>
                 </View>
 
        </View>
