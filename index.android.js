@@ -16,6 +16,7 @@ import React, {
 } from 'react-native';
 
 import Icon from "react-native-vector-icons/FontAwesome";
+import Dropdown from "react-native-dropdown-android";
 // var Icon  = require("react-native-vector-icons/FontAwesome");
 // import * as Icon from "react-native-vector-icons/FontAwesome";
 
@@ -30,6 +31,10 @@ var SimpleScreenRecorder = React.createClass ({
 
     this.refs['DRAWER'].openDrawer();
   },
+
+  showPopupMenu: function () {
+    console.log("test");
+  },
   
   render: function () {
     var navigationView = (
@@ -39,12 +44,19 @@ var SimpleScreenRecorder = React.createClass ({
         </Text>
       </View>
     );
-
+    
+   var popupMenu = (
+        <Dropdown style={{height: 20, width: 10}}
+                values={["choose one", "one", 2, 3, [5,6,7,8]]}
+                selected={"1"}
+                onChange={(data) => { console.log(data);}} />
+     
+   );
     
     
     return (
       <DrawerLayoutAndroid
-          drawerWidth={300}
+          drawerWidth={150}
           drawerPosition={DrawerLayoutAndroid.positions.Left}
           renderNavigationView={() => navigationView}
           ref={'DRAWER'}>
