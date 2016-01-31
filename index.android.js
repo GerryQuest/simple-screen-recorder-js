@@ -68,14 +68,20 @@ var SimpleScreenRecorder = React.createClass ({
           renderNavigationView={() => navigationView}
           ref={'DRAWER'}>
         <View style={{alignItems: "center", alignSelf: "stretch"}}>
-        <ToolbarAndroid title="Simple Screen Recorder"
+        <ToolbarAndroid 
                         actions={[{title: "Save as", show: "never"},
                                  {title: "Delete", show: "never"},
                                  {title: "Share", show: "never"}]}
                         onActionSelected={this.onActionSelected}
                         style={{backgroundColor: "#FFB700",
                                 alignSelf: "stretch",
-                                height: 56}}/>
+                                height: 46}}>
+                <View>
+                        <Text style={{fontSize: 15}}>
+                        Simple Screen Saver
+                        </Text>
+                </View>
+        </ToolbarAndroid>
         </View>
         
         
