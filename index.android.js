@@ -35,6 +35,13 @@ var SimpleScreenRecorder = React.createClass ({
   showPopupMenu: function () {
     console.log("test");
   },
+
+  onActionSelected: function (position) {
+    if (position === 0) {
+         console.log("test");  
+    }
+    
+  },
   
   render: function () {
     var navigationView = (
@@ -60,29 +67,47 @@ var SimpleScreenRecorder = React.createClass ({
           drawerPosition={DrawerLayoutAndroid.positions.Left}
           renderNavigationView={() => navigationView}
           ref={'DRAWER'}>
-        <View style={{flex:1, backgroundColor: "#FFFFFF", alignItems: "center"}}>
-                <View style={{flexDirection: "row",
-                              backgroundColor: "#FFB700",
-                              alignItems: "center",
-                              alignSelf: "stretch",
-                              height: 40,
-                              justifyContent: "space-between" }}>
-
-                        <TouchableOpacity onPress={this.toggleDrawer}>
-                                <Icon name="bars" size={15} color="#000000" style={{marginLeft: 10}}/>
-                        </TouchableOpacity>
-                         <Text style={{margin: 5, fontSize: 15, textAlign: "center"}}>
-                                
-                                Simple Screen Recorder
-                        </Text>
-                        <Icon name="ellipsis-v" size={15} color="#000000" style={{marginRight: 10}}/>
-                </View>
-
-       </View>
+        <View style={{alignItems: "center", alignSelf: "stretch"}}>
+        <ToolbarAndroid title="Simple Screen Recorder"
+                        actions={[{title: "Save as", show: "never"},
+                                 {title: "Delete", show: "never"},
+                                 {title: "Share", show: "never"}]}
+                        onActionSelected={this.onActionSelected}
+                        style={{backgroundColor: "#FFB700",
+                                alignSelf: "stretch",
+                                height: 56}}/>
+        </View>
+        
+        
         </DrawerLayoutAndroid>
     );
   }
 });
+
+
+// <View style={{flex:1, backgroundColor: "#FFFFFF", alignItems: "center"}}>
+//                 <View style={{flexDirection: "row",
+//                               backgroundColor: "#FFB700",
+//                               alignItems: "center",
+//                               alignSelf: "stretch",
+//                               height: 40,
+//                               justifyContent: "space-between" }}>
+
+//                         <TouchableOpacity onPress={this.toggleDrawer}>
+//                                 <Icon name="bars" size={15} color="#000000" style={{marginLeft: 10}}/>
+//                         </TouchableOpacity>
+//                          <Text style={{margin: 5, fontSize: 15, textAlign: "center"}}>
+                                
+//                                 Simple Screen Recorder
+//                         </Text>
+//                         <Icon name="ellipsis-v" size={15} color="#000000" style={{marginRight: 10}}/>
+//                 </View>
+
+//        </View>
+
+
+
+
 
 // class SimpleScreenRecorder extends Component {
 //   render() {
