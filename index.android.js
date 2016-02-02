@@ -104,12 +104,12 @@ var SimpleScreenRecorder = React.createClass ({
                         actions={[{title: "Save as", show: "never"},
                                  {title: "Delete", show: "never"},
                                  {title: "Share", show: "never"}]}
-     
                         onActionSelected={this.onActionSelected}
                         style={styles.toolbar}>
+        
                 <View style={styles.toolbarTitle}>
                         <TouchableOpacity onPress={this.toggleDrawer}>
-                        <Icon name="bars" size={15} color="#000000"/>
+                                <Icon name="bars" size={15} color="#000000"/>
                         </TouchableOpacity>
                         <Text style={styles.toolbarHeading}>
                            Simple Screen Recorder
@@ -144,27 +144,6 @@ var SimpleScreenRecorder = React.createClass ({
 
 //        </View>
 
-
-
-
-
-// class SimpleScreenRecorder extends Component {
-//   render() {
-//     return (
-//       <View style={styles.container}>
-//         <Text style={styles.welcome}>
-//           Welcome to React Native!
-//         </Text>
-//         <Text style={styles.instructions}>
-//           To get started, edit index.android.js
-//         </Text>
-//         <Text style={styles.instructions}>
-//           Shake or press menu button for dev menu
-//         </Text>
-//       </View>
-//     );
-//   }
-// }
 
 const styles = StyleSheet.create({
   toolbar: {
