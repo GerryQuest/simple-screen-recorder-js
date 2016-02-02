@@ -108,10 +108,13 @@ var SimpleScreenRecorder = React.createClass ({
                         onActionSelected={this.onActionSelected}
                         style={styles.toolbar}>
                 <View style={styles.toolbarTitle}>
+                        <TouchableOpacity onPress={this.toggleDrawer}>
                         <Icon name="bars" size={15} color="#000000"/>
+                        </TouchableOpacity>
                         <Text style={styles.toolbarHeading}>
                            Simple Screen Recorder
                         </Text>
+                        
                 </View>
         </ToolbarAndroid>
         </View>
