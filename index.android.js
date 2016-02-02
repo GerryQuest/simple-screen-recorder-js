@@ -42,7 +42,11 @@ var SimpleScreenRecorder = React.createClass ({
     if (position === 0) {
          console.log("test");
       var so = this.state.source;
-      Alert.alert("hi", JSON.stringify(so));
+      // this.setState({source: "heye"});
+      var {uri: x} = this.state.jj;
+      // Alert.alert("heu", JSON.stringify(x));
+      // this.setState({barsIcon: r(this.state.jj.uri)});
+      // Alert.alert("hi", JSON.stringify(so));
       // Alert.alert("hi", so.uri);
     }
     
@@ -51,11 +55,13 @@ var SimpleScreenRecorder = React.createClass ({
   componentWillMount: function () {
     this.setState({barsIcon: require("./Hamburger.png")});
     var thesource = Icon.getImageSource('rocket', 15, "#000000");
+    this.setState({jj: thesource});
     // Icon.getImageSource('rocket', 15, "#000000").then((source) => Alert.alert("hi", JSON.stringify(source)));
-    
-    this.setState({source: thesource.toString()});
+    // Icon.getImageSource('rocket', 15, "#000000").then((source) => this.setState({ jj: source }));
+    this.setState({asource: JSON.stringify(thesource)});
     // Alert.alert("hiss", thesource);
     // this.setState({source: thesource});
+    this.setState({source: "heyesssssssss"});
     console.log(thesource);
     // this.setState({barsIcon: source})
   },
@@ -98,16 +104,13 @@ var SimpleScreenRecorder = React.createClass ({
                         actions={[{title: "Save as", show: "never"},
                                  {title: "Delete", show: "never"},
                                  {title: "Share", show: "never"}]}
-                        
+     
                         onActionSelected={this.onActionSelected}
-                        style={{backgroundColor: "#FFB700",
-                                alignSelf: "stretch",
-                                height: 46}}>
-                <View>
-                        <Icon name="bars" size={15} color="#000000" style={{alignSelf:"flex-start", marginLeft: 23}}/>        
-                        <Text style={{fontSize: 15, marginLeft: 10, alignItems:"center"}}>
-                
-                        Simple Screen Recorder
+                        style={styles.toolbar}>
+                <View style={styles.toolbarTitle}>
+                        <Icon name="bars" size={15} color="#000000"/>
+                        <Text style={styles.toolbarHeading}>
+                           Simple Screen Recorder
                         </Text>
                 </View>
         </ToolbarAndroid>
@@ -161,22 +164,38 @@ var SimpleScreenRecorder = React.createClass ({
 // }
 
 const styles = StyleSheet.create({
+  toolbar: {
+    backgroundColor: "#FFB700",
+    alignSelf: "stretch",
+    height: 46  
+  },
+  toolbarTitle: {
+    flex:1,
+    flexDirection: "row",
+    alignItems: 'center',
+    // justifyContent: 'center',
+    marginLeft: 10, backgroundColor: "#FFB700"
+    
+  },
+  toolbarHeading: {
+    fontSize: 15, marginLeft: 10, alignItems:"center"
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F5FCFF'
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
-    margin: 10,
+    margin: 10
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,
-  },
+    marginBottom: 5
+  }
 });
 
 AppRegistry.registerComponent('SimpleScreenRecorder', () => SimpleScreenRecorder);
