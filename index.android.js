@@ -12,7 +12,8 @@ import React, {
   View,
   DrawerLayoutAndroid,
   ToolbarAndroid,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -27,6 +28,7 @@ import Dropdown from "react-native-dropdown-android";
 // var bars = (<Icon name="rocket" size={30} color="#FFF"/>);
 var SimpleScreenRecorder = React.createClass ({
 
+
   toggleDrawer: function () {
 
     this.refs['DRAWER'].openDrawer();
@@ -38,11 +40,34 @@ var SimpleScreenRecorder = React.createClass ({
 
   onActionSelected: function (position) {
     if (position === 0) {
-         console.log("test");  
+         console.log("test");
+      var so = this.state.source;
+      Alert.alert("hi", JSON.stringify(so));
+      // Alert.alert("hi", so.uri);
     }
     
   },
-  
+
+  componentWillMount: function () {
+    this.setState({barsIcon: require("./Hamburger.png")});
+    var thesource = Icon.getImageSource('rocket', 15, "#000000");
+    // Icon.getImageSource('rocket', 15, "#000000").then((source) => Alert.alert("hi", JSON.stringify(source)));
+    
+    this.setState({source: thesource.toString()});
+    // Alert.alert("hiss", thesource);
+    // this.setState({source: thesource});
+    console.log(thesource);
+    // this.setState({barsIcon: source})
+  },
+  componentDidMount: function () {
+     // Icon.getImageSource('rocket', 15, "#000000").then((source) => this.setState({ barsIcon: source }));
+    // Alert.alert("message", this.state.source);    
+  },
+  // shouldComponentUpdate: function () {
+
+    
+  // },
+
   render: function () {
     var navigationView = (
       <View style={{flex:1, backgroundColor: "#FFF"}}>
@@ -60,6 +85,7 @@ var SimpleScreenRecorder = React.createClass ({
      
    );
     
+   
     
     return (
       <DrawerLayoutAndroid
@@ -72,19 +98,20 @@ var SimpleScreenRecorder = React.createClass ({
                         actions={[{title: "Save as", show: "never"},
                                  {title: "Delete", show: "never"},
                                  {title: "Share", show: "never"}]}
+                        
                         onActionSelected={this.onActionSelected}
                         style={{backgroundColor: "#FFB700",
                                 alignSelf: "stretch",
                                 height: 46}}>
                 <View>
-                        <Text style={{fontSize: 15}}>
-                        Simple Screen Saver
+                        <Icon name="bars" size={15} color="#000000" style={{alignSelf:"flex-start", marginLeft: 23}}/>        
+                        <Text style={{fontSize: 15, marginLeft: 10, alignItems:"center"}}>
+                
+                        Simple Screen Recorder
                         </Text>
                 </View>
         </ToolbarAndroid>
         </View>
-        
-        
         </DrawerLayoutAndroid>
     );
   }
