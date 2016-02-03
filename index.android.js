@@ -18,7 +18,7 @@ import React, {
 
 import Icon from "react-native-vector-icons/FontAwesome";
 import Dropdown from "react-native-dropdown-android";
-import Record from "components/record";
+import Record from "./components/record";
 
 // var Icon  = require("react-native-vector-icons/FontAwesome");
 // import * as Icon from "react-native-vector-icons/FontAwesome";
@@ -37,8 +37,8 @@ var SimpleScreenRecorder = React.createClass ({
   toggleDrawer: function () {
 
     this.refs['DRAWER'].openDrawer();
-  },
-
+  }, 
+  
   showPopupMenu: function () {
     console.log("test");
   },
@@ -101,7 +101,8 @@ var SimpleScreenRecorder = React.createClass ({
           drawerWidth={150}
           drawerPosition={DrawerLayoutAndroid.positions.Left}
           renderNavigationView={() => navigationView}
-          ref={'DRAWER'}>
+          ref={'DRAWER'}
+	  style={styles.drawerlayout}>
         <View style={{alignItems: "center", alignSelf: "stretch"}}>
         <ToolbarAndroid 
                         actions={[{title: "Save as", show: "never"},
@@ -121,6 +122,7 @@ var SimpleScreenRecorder = React.createClass ({
                 </View>
         </ToolbarAndroid>
         </View>
+	<Record />
         </DrawerLayoutAndroid>
     );
   }
@@ -149,6 +151,9 @@ var SimpleScreenRecorder = React.createClass ({
 
 
 const styles = StyleSheet.create({
+  drawerlayout: {
+    flex:1
+  },
   toolbar: {
     backgroundColor: "#FFB700",
     alignSelf: "stretch",
