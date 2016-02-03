@@ -18,6 +18,8 @@ import React, {
 
 import Icon from "react-native-vector-icons/FontAwesome";
 import Dropdown from "react-native-dropdown-android";
+import Record from "components/record";
+
 // var Icon  = require("react-native-vector-icons/FontAwesome");
 // import * as Icon from "react-native-vector-icons/FontAwesome";
 
@@ -26,6 +28,9 @@ import Dropdown from "react-native-dropdown-android";
 // import {Icon} from "react-native-vector-icons/FontAwesome";
 
 // var bars = (<Icon name="rocket" size={30} color="#FFF"/>);
+
+
+
 var SimpleScreenRecorder = React.createClass ({
 
 
@@ -90,9 +95,7 @@ var SimpleScreenRecorder = React.createClass ({
                 onChange={(data) => { console.log(data);}} />
      
    );
-    
-   
-    
+        
     return (
       <DrawerLayoutAndroid
           drawerWidth={150}
@@ -103,7 +106,7 @@ var SimpleScreenRecorder = React.createClass ({
         <ToolbarAndroid 
                         actions={[{title: "Save as", show: "never"},
                                  {title: "Delete", show: "never"},
-                                 {title: "Share", show: "never"}]}
+                                 {title: "Share", show: "never"}] }
                         onActionSelected={this.onActionSelected}
                         style={styles.toolbar}>
         
