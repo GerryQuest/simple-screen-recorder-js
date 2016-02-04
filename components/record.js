@@ -49,45 +49,61 @@ var Record = React.createClass ({
     
     Animated.timing(
       this.state.recordButtonFade,
-      {duaration: 9000,
+      {duration: 1000,
        delay: 100,
        easing: Easing.in(Easing.ease),
-       toValue: 1800}
+       toValue: 1}
     ).start();  
   },
   componentDidMount: function () {
     this.runAnimation();
     
-    Animated.timing (
-      this.state.recordButtonShadow,
-      {duaration: 6000,
-      delay:100,
-      easing: Easing.in(Easing.ease),
-      toValue: 1}
-    ).start();
-  },
-  
-  render: function () {
-
-    var color = this.state.recordButtonFade.interpolate({
-      inputRange: [0,1000, 1800],
+    // Animated.timing (
+    //   this.state.recordButtonShadow,
+    //   {duration: 6000,
+    //   delay:3000,
+    //   easing: Easing.in(Easing.ease),
+    //   toValue: 1}
+    // ).start();
+    this.setState({color: this.state.recordButtonFade.interpolate({
+      inputRange: [0,0.3, 1],
       outputRange: ["rgb(156,41,41)", "rgb(255,28,28)", "rgb(156,41,41)"]
       
-    });
+    })});
+    
+  },
+  toggleButtonColour: function () {
+    if (this.state.color !== "rgb(255, 28, 28)") {
+      this.replaceState({color: "rgb(255, 28, 28)"});  
+    } else {
+      this.replaceState({color: "rgb(156,41,41)"});  
+    }
+    
+  },
+  componentWillMount: function () {
+    
+  },
+  render: function () {
+
+    // var color = this.state.recordButtonFade.interpolate({
+    //   inputRange: [0,0.3, 1],
+    //   outputRange: ["rgb(156,41,41)", "rgb(255,28,28)", "rgb(156,41,41)"]
+      
+    // });
+
     
     return (
       <View style={styles.view}>
-	<TouchableOpacity onPress={this.startRecord}>
+	<TouchableOpacity onPress={this.startRecord}
+                          onPressIn={this.toggleButtonColour}
+	                  activeOpacity={0.8}>
 	   <AnimateIcon name="dot-circle-o" size={120} 
             style={{alignItems: "center",
 		    alignSelf: "center",
 		    justifyContent: "center",
 		    elevation:15,
 		    opacity: this.state.recordButtonFade,
-		    color:color,
-		    borderRadius: 5,
-		    borderColor: "#000",
-		    borderWidth: 5
+		    color:this.state.color
 		   }} />
 	   <Text style={styles.textRecord}>
 	     Press to Record
