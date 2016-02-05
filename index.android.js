@@ -103,6 +103,7 @@ var SimpleScreenRecorder = React.createClass ({
           renderNavigationView={() => navigationView}
           ref={'DRAWER'}
 	  style={styles.drawerlayout}>
+	
         <View style={{alignItems: "center", alignSelf: "stretch"}}>
         <ToolbarAndroid 
                         actions={[{title: "Save as", show: "never"},
@@ -123,6 +124,7 @@ var SimpleScreenRecorder = React.createClass ({
         </ToolbarAndroid>
         </View>
 	<Record />
+	
         </DrawerLayoutAndroid>
     );
   }
