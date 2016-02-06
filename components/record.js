@@ -31,7 +31,8 @@ var Record = React.createClass ({
    return {
      recordButtonFade: new Animated.Value(0),
      recordButtonShadow: new Animated.Value(0),
-     countdown: "Status: idle"
+     countdown: "Status: idle",
+     instruction: "Press to Record"
    };
   },
   runAnimation: function () {
@@ -76,6 +77,7 @@ var Record = React.createClass ({
 
       clearInterval(this.interval);
       this.setState({countdown: "Recording"});
+      this.setState({instruction: "Press to Stop"});
       // change state
     } else {
       this.setState({countdown: this.state.countdown - 1});
@@ -86,6 +88,7 @@ var Record = React.createClass ({
   stopCountdown: function () {
     clearInterval(this.interval);
     this.setState({countdown: "Status: Idle"});
+    this.setState({instruction: "Press to Record"});
   },
   
   startCountdown: function () {
@@ -137,7 +140,7 @@ var Record = React.createClass ({
 		    color:this.state.color
 		   }} />
 	   <Text style={styles.textRecord}>
-	     Press to Record
+	     {this.state.instruction}
 	   </Text>
 	</TouchableOpacity>
 	<View>
