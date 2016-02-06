@@ -77,7 +77,13 @@ var Record = React.createClass ({
     // })});
   },
   minusOne: function () {
-    this.setState({countdown: this.state.countdown - 1});
+    // this.setState({countdown: this.state.countdown - 1});
+    if (this.state.countdown <= 1) {
+      clearInterval();
+    } else {
+      this.setState({countdown: this.state.countdown - 1});
+    }
+
   },
   startCountdown: function () {
     // var timing = Animated.timing;
