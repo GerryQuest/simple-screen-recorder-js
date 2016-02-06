@@ -82,6 +82,12 @@ var Record = React.createClass ({
     }
 
   },
+
+  stopCountdown: function () {
+    clearInterval(this.interval);
+    this.setState({countdown: 3});
+  },
+  
   startCountdown: function () {
     var countdown = this.state.countdown;
     if (this.state.countdown === 3) {
@@ -99,7 +105,7 @@ var Record = React.createClass ({
       this.setState({color: "rgb(255, 28, 28)"},  this.startCountdown());
      
     } else {
-      this.setState({color: "rgb(156,41,41)"});  
+      this.setState({color: "rgb(156,41,41)"}, this.stopCountdown());  
     }
     
   },
