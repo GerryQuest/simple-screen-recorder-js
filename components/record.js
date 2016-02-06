@@ -31,7 +31,7 @@ var Record = React.createClass ({
    return {
      recordButtonFade: new Animated.Value(0),
      recordButtonShadow: new Animated.Value(0),
-     countdown: 3
+     countdown: "Status: idle"
    };
   },
   runAnimation: function () {
@@ -85,13 +85,14 @@ var Record = React.createClass ({
 
   stopCountdown: function () {
     clearInterval(this.interval);
-    this.setState({countdown: 3});
+    this.setState({countdown: "Status: Idle"});
   },
   
   startCountdown: function () {
-    var countdown = this.state.countdown;
+    // var countdown = this.state.countdown;
+    this.setState({countdown: 3});
     if (this.state.countdown === 3) {
-      this.minusOne();
+      // this.minusOne();
       this.interval = setInterval(this.minusOne, 1000);
       
     } else {
