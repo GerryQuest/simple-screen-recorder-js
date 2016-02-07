@@ -21,9 +21,12 @@ import React, {
 } from "react-native";
 
 import Icon from "react-native-vector-icons/FontAwesome";
+import TimerMixin from "react-timer-mixin";
 var AnimateIcon = Animated.createAnimatedComponent(Icon);
 
 var Record = React.createClass ({
+  mixins: [TimerMixin],
+  
   startRecord: function () {
     
   },
@@ -77,13 +80,13 @@ var Record = React.createClass ({
       outputRange: ["rgb(156,41,41)", "rgb(255,28,28)", "rgb(156,41,41)"]
     })});
 
-    setInterval(this.setProgress, 1000);
+    this.setInterval(this.setProgress, 1000);
   },
   minusOne: function () {
     // this.setState({countdown: this.state.countdown - 1});
     if (this.state.countdown == 1) {
 
-      clearInterval(this.interval);
+      this.clearInterval(this.interval);
       this.setState({countdown: "Status: Recording"});
       this.setState({instruction: "Press to Stop"});
       // change state
@@ -94,7 +97,7 @@ var Record = React.createClass ({
   },
 
   stopCountdown: function () {
-    clearInterval(this.interval);
+    this.clearInterval(this.interval);
     this.setState({countdown: "Status: Idle"});
     this.setState({instruction: "Press to Record"});
   },
@@ -104,7 +107,7 @@ var Record = React.createClass ({
     this.setState({countdown: 3});
     if (this.state.countdown === 3) {
       // this.minusOne();
-      this.interval = setInterval(this.minusOne, 1000);
+      this.interval = this.setInterval(this.minusOne, 1000);
       
     } else {
       
@@ -131,9 +134,11 @@ var Record = React.createClass ({
     //   outputRange: ["rgb(156,41,41)", "rgb(255,28,28)", "rgb(156,41,41)"]
       
     // });
-    var progressBar = <View>
-	               <ProgressBarAndroid styleAttr="Inverse" />
-	              </View>;
+    // var progressBar = this.setState({showProgess: })<ProgressBarAndroid styleAttr="Horizontal"
+    //                           color="#9C2929"
+    //                           progress={this.state.progress}
+    //                           style={styles.progress}
+    // 	                      indeterminate={false}/>;
     
     return (
       
@@ -160,11 +165,7 @@ var Record = React.createClass ({
 	  
 	</View>
 	<View>
-	  <ProgressBarAndroid styleAttr="Horizontal"
-                              color="#9C2929"
-                              progress={this.state.progress}
-                              style={styles.progress}
-	                      indeterminate={false}/>
+	  
 	</View>
 	<Text style={styles.recordTime}>
 
