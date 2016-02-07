@@ -93,9 +93,11 @@ var Record = React.createClass ({
     // this.setState({countdown: this.state.countdown - 1});
     if (this.state.countdown == 1) {
 
-      clearInterval(this.interval);
+      clearInterval(this.interval); // Stop timer
       this.setState({countdown: "Status: Recording"});
       this.setState({instruction: "Press to Stop"});
+      this.refs["PROGRESS"].showProgress();
+      this.refs["PROGRESS"].activateProgress();
       // change state
     } else {
       this.setState({countdown: this.state.countdown - 1});
@@ -107,6 +109,7 @@ var Record = React.createClass ({
     clearInterval(this.interval);
     this.setState({countdown: "Status: Idle"});
     this.setState({instruction: "Press to Record"});
+    this.refs["PROGRESS"].stopProgress();
   },
   
   startCountdown: function () {
@@ -125,9 +128,9 @@ var Record = React.createClass ({
   toggleButtonColour: function () {
     if (this.state.color !== "rgb(255, 28, 28)") {
       this.setState({color: "rgb(255, 28, 28)"},  this.startCountdown());
-     
     } else {
-      this.setState({color: "rgb(156,41,41)"}, this.stopCountdown());  
+      this.setState({color: "rgb(156,41,41)"}, this.stopCountdown());
+      this.refs["PROGRESS"].hideProgress(); // hides but does not stop
     }
     
   },
@@ -165,13 +168,12 @@ var Record = React.createClass ({
 	     {this.state.instruction}
 	   </Text>
 	</TouchableOpacity>
-	<View>
+	<View style={styles.countdown}>
 	  <Text>
 	  {this.state.countdown}
           </Text>
-	  <MovingBar ref={'PROGRESS'}/>
 	</View>
-
+	<MovingBar ref={'PROGRESS'}/>
 	<Text style={styles.recordTime}>
 
         </Text>
@@ -200,6 +202,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     justifyContent: "center"
+  },
+  countdown: {
+    alignSelf: "center",
+    justifyContent: "center",
+    flexDirection: "column"
   },
   textRecord: {
    fontSize: 20

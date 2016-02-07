@@ -27,6 +27,9 @@ var MovingBar = React.createClass({
     // Set showProgress to false, which should remove it by making it null
     this.setState({showProgress: true});
   },
+  hideProgress: function () {
+    this.setState({showProgress: false});
+  },
   toggleProgress: function (arg) {
     // arg should either be true or false
     this.setState({showProgress: arg});
@@ -34,12 +37,18 @@ var MovingBar = React.createClass({
   stopProgress: function () {
     clearInterval(this.interval);
   },
+  restartProgress: function () {
+    this.interval();
+  },
   startProgress: function () {
     var progress = (this.state.progress + 0.02) % 1;
     this.setState({progress: progress});
   },
-  componentDidMount: function () {
+  activateProgress: function () {
     this.interval = setInterval(this.startProgress, 1000);
+  },
+  componentDidMount: function () {
+    // this.activateProgress();
   },
   componentWillUnmount: function () {
     clearInterval(this.interval);
