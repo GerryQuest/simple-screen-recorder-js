@@ -21,11 +21,13 @@ import React, {
 } from "react-native";
 
 import Icon from "react-native-vector-icons/FontAwesome";
-import TimerMixin from "react-timer-mixin";
+// import TimerMixin from "react-timer-mixin";
+import MovingBar from "./movingbar";
+// var TimerMixin = require('react-timer-mixin'); // Import wont allow for interval unmount
+
 var AnimateIcon = Animated.createAnimatedComponent(Icon);
 
 var Record = React.createClass ({
-  mixins: [TimerMixin],
   
   startRecord: function () {
     
@@ -80,13 +82,18 @@ var Record = React.createClass ({
       outputRange: ["rgb(156,41,41)", "rgb(255,28,28)", "rgb(156,41,41)"]
     })});
 
-    this.setInterval(this.setProgress, 1000);
+    setInterval(this.setProgress, 1000);
   },
+
+  componentWillUnmount: function () {
+    clearInterval(this.interval);
+  },
+  
   minusOne: function () {
     // this.setState({countdown: this.state.countdown - 1});
     if (this.state.countdown == 1) {
 
-      this.clearInterval(this.interval);
+      clearInterval(this.interval);
       this.setState({countdown: "Status: Recording"});
       this.setState({instruction: "Press to Stop"});
       // change state
@@ -97,7 +104,7 @@ var Record = React.createClass ({
   },
 
   stopCountdown: function () {
-    this.clearInterval(this.interval);
+    clearInterval(this.interval);
     this.setState({countdown: "Status: Idle"});
     this.setState({instruction: "Press to Record"});
   },
@@ -107,7 +114,7 @@ var Record = React.createClass ({
     this.setState({countdown: 3});
     if (this.state.countdown === 3) {
       // this.minusOne();
-      this.interval = this.setInterval(this.minusOne, 1000);
+      this.interval = setInterval(this.minusOne, 1000);
       
     } else {
       
@@ -125,7 +132,7 @@ var Record = React.createClass ({
     
   },
   componentWillMount: function () {
-    
+    clearInterval(this.interval);
   },
   render: function () {
 
@@ -162,11 +169,9 @@ var Record = React.createClass ({
 	  <Text>
 	  {this.state.countdown}
           </Text>
-	  
+	  <MovingBar ref={'PROGRESS'}/>
 	</View>
-	<View>
-	  
-	</View>
+
 	<Text style={styles.recordTime}>
 
         </Text>
