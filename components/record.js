@@ -163,7 +163,8 @@ var Record = React.createClass ({
 	  <ProgressBarAndroid styleAttr="Horizontal"
                               color="#9C2929"
                               progress={this.state.progress}
-                              style={styles.progress} />
+                              style={styles.progress}
+	                      indeterminate={false}/>
 	</View>
 	<Text style={styles.recordTime}>
 
