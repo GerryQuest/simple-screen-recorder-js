@@ -16,7 +16,8 @@ import React, {
   TouchableOpacity,
   Alert,
   Animated,
-  Easing
+  Easing,
+  ProgressBarAndroid
 } from "react-native";
 
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -32,7 +33,8 @@ var Record = React.createClass ({
      recordButtonFade: new Animated.Value(0),
      recordButtonShadow: new Animated.Value(0),
      countdown: "Status: idle",
-     instruction: "Press to Record"
+     instruction: "Press to Record",
+     progress: 0
    };
   },
   runAnimation: function () {
@@ -56,6 +58,10 @@ var Record = React.createClass ({
        toValue: 1}
     ).start();  
   },
+  setProgress: function () {
+    var progress = (this.state.progress + 0.02) % 1;
+    this.setState({progress: progress});
+  },
   componentDidMount: function () {
     this.runAnimation();
     
@@ -70,13 +76,15 @@ var Record = React.createClass ({
       inputRange: [0,0.3, 1],
       outputRange: ["rgb(156,41,41)", "rgb(255,28,28)", "rgb(156,41,41)"]
     })});
+
+    setInterval(this.setProgress, 1000);
   },
   minusOne: function () {
     // this.setState({countdown: this.state.countdown - 1});
     if (this.state.countdown == 1) {
 
       clearInterval(this.interval);
-      this.setState({countdown: "Recording"});
+      this.setState({countdown: "Status: Recording"});
       this.setState({instruction: "Press to Stop"});
       // change state
     } else {
@@ -123,7 +131,9 @@ var Record = React.createClass ({
     //   outputRange: ["rgb(156,41,41)", "rgb(255,28,28)", "rgb(156,41,41)"]
       
     // });
-
+    var progressBar = <View>
+	               <ProgressBarAndroid styleAttr="Inverse" />
+	              </View>;
     
     return (
       
@@ -144,12 +154,19 @@ var Record = React.createClass ({
 	   </Text>
 	</TouchableOpacity>
 	<View>
-	<Text>
-	{this.state.countdown}
-        </Text>
+	  <Text>
+	  {this.state.countdown}
+          </Text>
+	  
+	</View>
+	<View>
+	  <ProgressBarAndroid styleAttr="Horizontal"
+                              color="#9C2929"
+                              progress={this.state.progress}
+                              style={styles.progress} />
 	</View>
 	<Text style={styles.recordTime}>
-	  
+
         </Text>
 	
 	
@@ -167,6 +184,10 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center"
+  },
+  progress: {
+    width: 150,
+    height: 20
   },
   recordButton: {
     alignItems: "center",
