@@ -37,8 +37,9 @@ var MovingBar = React.createClass({
   stopProgress: function () {
     clearInterval(this.interval);
   },
-  restartProgress: function () {
-    this.interval();
+  resetProgress: function () {
+    // this.interval();
+    this.setState({progress: 0});
   },
   startProgress: function () {
     var progress = (this.state.progress + 0.02) % 1;
