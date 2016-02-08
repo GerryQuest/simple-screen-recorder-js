@@ -42,7 +42,8 @@ var MovingBar = React.createClass({
     this.setState({progress: 0});
   },
   startProgress: function () {
-    var progress = (this.state.progress + 0.02) % 1;
+    // 0.0167 should provide full progress bar after 1minute
+    var progress = (this.state.progress + 0.0168) % 1;
     this.setState({progress: progress});
   },
   activateProgress: function () {
@@ -50,7 +51,30 @@ var MovingBar = React.createClass({
   },
   componentDidMount: function () {
     // this.activateProgress();
+    // this.isRecordingTimeUp();
   },
+  isRecordingTimeUp: function () {
+    var timeUp = false;
+    if (this.state.progress >= 0.99) {
+      // and maybe return true boolean if it has stopped
+      this.stopProgress();
+      // change status to end of recording time
+      timeUp = true;
+    }
+    return timeUp;
+  },
+  componentWillUpdate: function () {
+    this.isRecordingTimeUp();
+  },
+  
+  // shouldComponentUpdate: function () {
+  //   var update = true;
+  //   if (this.isRecordingTimeUp()) {
+  //     update = false;
+  //   }
+  //   return update;
+  // },
+  
   componentWillUnmount: function () {
     clearInterval(this.interval);
   },

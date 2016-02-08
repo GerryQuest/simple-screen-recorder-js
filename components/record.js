@@ -88,7 +88,11 @@ var Record = React.createClass ({
   componentWillUnmount: function () {
     clearInterval(this.interval);
   },
-  
+  componentDidUpdate: function () {
+    // if (this.refs["PROGRESS"].isRecordingTimeUp()){
+    //   this.setState({countdown: "Status: Recording Completed"});
+    // }
+  },
   minusOne: function () {
     // this.setState({countdown: this.state.countdown - 1});
     if (this.state.countdown == 1) {
