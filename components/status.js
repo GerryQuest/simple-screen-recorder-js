@@ -14,15 +14,27 @@ import React,
 
 var Status  = React.createClass({
 
-  getInitialState: function () {
+  // getInitialState: function () {
     
-  },
+  // },
   
   render: function () {
 
     return (
-      
+      <View>
+	<Text style={styles.countdown}>
+	 {this.props.status}
+	</Text>
+     </View>
     );
+  }
+});
+
+const styles = StyleSheet.create({
+  countdown: {
+    alignSelf: "center",
+    justifyContent: "center",
+    flexDirection: "column"
   }
 });
 

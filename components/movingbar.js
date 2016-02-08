@@ -13,6 +13,7 @@ import React, {
 
 // import TimerMixin from "react-timer-mixin";
 // var TimerMixin = require('react-timer-mixin'); // Import wont allow for interval unmount
+import Status from "./status";
 
 var MovingBar = React.createClass({
 
@@ -87,7 +88,9 @@ var MovingBar = React.createClass({
     	                             indeterminate={false}/> : null;
     
     return (
+
       <View>
+	<Status status={this.props.status} />
 	{progressBar}
       </View>
     );

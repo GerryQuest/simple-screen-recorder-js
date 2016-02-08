@@ -143,7 +143,11 @@ var Record = React.createClass ({
     clearInterval(this.interval);
   },
   render: function () {
-    
+    	// <View style={styles.countdown}>
+	//   <Text>
+	  
+        //   </Text>
+	// </View>
     return (
       
       <View style={styles.view}>
@@ -162,12 +166,8 @@ var Record = React.createClass ({
 	     {this.state.instruction}
 	   </Text>
 	</TouchableOpacity>
-	<View style={styles.countdown}>
-	  <Text>
-	  {this.state.countdown}
-          </Text>
-	</View>
-	<MovingBar ref={'PROGRESS'}/>
+
+	<MovingBar ref={'PROGRESS'} status={this.state.countdown}/>
 	<Text style={styles.recordTime}>
 
         </Text>
