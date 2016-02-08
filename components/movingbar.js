@@ -54,17 +54,17 @@ var MovingBar = React.createClass({
     // this.isRecordingTimeUp();
   },
   isRecordingTimeUp: function () {
-    var timeUp = false;
+    var isTimeUp = false;
     if (this.state.progress >= 0.99) {
       // and maybe return true boolean if it has stopped
       this.stopProgress();
       // change status to end of recording time
-      timeUp = true;
+      isTimeUp = true;
     }
-    return timeUp;
+    return isTimeUp;
   },
   componentWillUpdate: function () {
-    this.isRecordingTimeUp();
+    // this.isRecordingTimeUp();
   },
   
   // shouldComponentUpdate: function () {

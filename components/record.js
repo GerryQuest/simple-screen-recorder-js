@@ -82,7 +82,7 @@ var Record = React.createClass ({
       outputRange: ["rgb(156,41,41)", "rgb(255,28,28)", "rgb(156,41,41)"]
     })});
 
-    setInterval(this.setProgress, 1000);
+    // setInterval(this.setProgress, 1000);
   },
 
   componentWillUnmount: function () {
@@ -143,17 +143,6 @@ var Record = React.createClass ({
     clearInterval(this.interval);
   },
   render: function () {
-
-    // var color = this.state.recordButtonFade.interpolate({
-    //   inputRange: [0,0.3, 1],
-    //   outputRange: ["rgb(156,41,41)", "rgb(255,28,28)", "rgb(156,41,41)"]
-      
-    // });
-    // var progressBar = this.setState({showProgess: })<ProgressBarAndroid styleAttr="Horizontal"
-    //                           color="#9C2929"
-    //                           progress={this.state.progress}
-    //                           style={styles.progress}
-    // 	                      indeterminate={false}/>;
     
     return (
       
