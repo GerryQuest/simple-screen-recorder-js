@@ -21,7 +21,8 @@ var MovingBar = React.createClass({
   getInitialState: function () {
     return {
       progress: 0,
-      showProgress: false
+      showProgress: false,
+      isTimeUp: false
     };
   },
   showProgress: function () {
@@ -52,20 +53,26 @@ var MovingBar = React.createClass({
   },
   componentDidMount: function () {
     // this.activateProgress();
-    // this.isRecordingTimeUp();
+
   },
   isRecordingTimeUp: function () {
-    var isTimeUp = false;
+    // var isTimeUp = false;
     if (this.state.progress >= 0.99) {
       // and maybe return true boolean if it has stopped
       this.stopProgress();
+      this.setState({isTimeUp: true});
+      this.setState({completedRecording: "Status: Completed Recording"});
+      
       // change status to end of recording time
-      isTimeUp = true;
+      // isTimeUp = true;
     }
-    return isTimeUp;
+    // return isTimeUp;
+  },
+  componentDidUpdate: function () {
+    // this.isRecordingTimeUp();
   },
   componentWillUpdate: function () {
-    // this.isRecordingTimeUp();
+    this.isRecordingTimeUp();
   },
   
   // shouldComponentUpdate: function () {
@@ -86,11 +93,11 @@ var MovingBar = React.createClass({
                                      progress={this.state.progress}
                                      style={styles.progress}
     	                             indeterminate={false}/> : null;
-    
+    var newStatus = this.state.isTimeUp ? this.state.completedRecording : this.props.status;
     return (
 
       <View>
-	<Status status={this.props.status} />
+	<Status status={newStatus} />
 	{progressBar}
       </View>
     );
