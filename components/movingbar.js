@@ -61,8 +61,10 @@ var MovingBar = React.createClass({
       // and maybe return true boolean if it has stopped
       this.stopProgress();
       this.setState({isTimeUp: true});
-      this.setState({completedRecording: "Status: Completed Recording"});
-      
+
+      // May not need to be state, as this doesnt change
+      this.setState({completedRecording: "Status: Idle"}); //Changed from Completed recording
+      this.props.toggleButtonColour();
       // change status to end of recording time
       // isTimeUp = true;
     }
@@ -96,8 +98,9 @@ var MovingBar = React.createClass({
     var newStatus = this.state.isTimeUp ? this.state.completedRecording : this.props.status;
     return (
 
-      <View>
+      <View style={styles.statusView}>
 	<Status status={newStatus} />
+	
 	{progressBar}
       </View>
     );
@@ -106,8 +109,22 @@ var MovingBar = React.createClass({
 
 const styles = StyleSheet.create({
   progress: {
-    width: 150,
-    height: 20
+    width: 112,
+    height: 20,
+    alignSelf: "center",
+    alignItems: "center",
+    position: "absolute"
+   
+  },
+  statusView : {
+    alignSelf: "center",
+    justifyContent: "center",
+    flexDirection: "column"
+  },
+  spaceHoarder: {
+    backgroundColor: "red",
+    height: 20,
+    width: 150
   }
 });
 

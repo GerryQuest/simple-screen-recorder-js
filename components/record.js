@@ -167,7 +167,9 @@ var Record = React.createClass ({
 	   </Text>
 	</TouchableOpacity>
 
-	<MovingBar ref={'PROGRESS'} status={this.state.countdown}/>
+	<MovingBar ref={'PROGRESS'}
+                   status={this.state.countdown}
+                   toggleButtonColour={this.toggleButtonColour}/>
 	<Text style={styles.recordTime}>
 
         </Text>

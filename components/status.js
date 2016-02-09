@@ -21,11 +21,11 @@ var Status  = React.createClass({
   render: function () {
 
     return (
-      <View>
-	<Text style={styles.countdown}>
+      <View style={styles.countdown}>
+	<Text>
 	 {this.props.status}
 	</Text>
-     </View>
+      </View>
     );
   }
 });
