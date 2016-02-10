@@ -103,6 +103,7 @@ var Record = React.createClass ({
       this.refs["PROGRESS"].showProgress();
       this.refs["PROGRESS"].activateProgress();
       // change state
+      // Start stopwatch here // Maybe pass stopwatch start func as prop
     } else {
       this.setState({countdown: this.state.countdown - 1});
     }
