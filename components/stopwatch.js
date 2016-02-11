@@ -32,29 +32,60 @@ var Stopwatch = React.createClass({
     // }
     // return number;
 
+      
+    
     return digit < 10 ? "0" + digit : digit;
   },
+  parseSecondAndMinute: function (number) {
+    var parsedNumber;
+    if (number < 9) {
+      parsedNumber = this.addZero(this.incrementNumber(number));
+    } else if (number === 9) {
+      parsedNumber = this.incrementNumber(number);
+    } else if (number === 59) {
+      parsedNumber = "00";
+    }
+    return parsedNumber;
+  } ,
   start: function () {
 
     // SO every second do the following. Maybe put in function
 
     if (typeof this.state.seconds === "string") {
-      this.setState({seconds: parseInt(this.state.seconds)});
+      // this.setState({seconds: parseInt(this.state.seconds)});
       // if (this.state.seconds < 10) {
       // 	this.incrementSeconds(); 
       // 	// Add 0 to it	
       // }
-      this.setState({seconds: this.addZero(this.state.seconds)});
+      var second = parseInt(this.state.seconds);
+
+      // wont work below because number maybe 59 in which case incrementing is pointless
+      // unless I check for 60
+      // second = isSingleDigitSecond(second) ? this.addZero(this.incrementNumber(second)) : this.incrementNumber(second);
+      
+      // could use case instead
+      if (second < 9) {
+	second = this.addZero(this.incrementNumber(second));
+      } else if (second === 9) {
+	second = this.incrementNumber(second);
+      } else if (second === 59) {
+	second = "00";
+      }
+
+      this.setState({seconds: second});
+ 
+    } else  {
+      if (second < 9) {
+	second = this.addZero(this.incrementNumber(second));
+      } else if (second === 9) {
+	second = this.incrementNumber(second);
+      } else if (second === 59) {
+	second = "00";
+      }
+      this.setState({seconds: second});
     }
     
-    if (this.state.seconds < 9) {
-      // increase second
-      this.incrementSeconds();
-    } else if (this.state.seconds == 9) {
-      // increase minute
-      this.incrementMinutes();
-      // If it as 9 then 
-    }
+  
     // this.interval = setInterval(, 1000);
   },
   stop: function () {
