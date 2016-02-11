@@ -101,11 +101,14 @@ var Record = React.createClass ({
       this.setState({countdown: "Status: Recording"});
       this.setState({instruction: "Press to Stop"});
       this.refs["PROGRESS"].showProgress();
-      this.refs["PROGRESS"].activateProgress();
+      this.refs["PROGRESS"].activateProgress(); // could being called every second
       // change state
       // Start stopwatch here // Maybe pass stopwatch start func as prop
+      this.refs["STOPWATCH"].start(); // this already has an interval
+      // this.refs["STOPWATCH"].run();
     } else {
       this.setState({countdown: this.state.countdown - 1});
+      // this.refs["STOPWATCH"].run();
     }
 
   },
@@ -116,6 +119,7 @@ var Record = React.createClass ({
     this.setState({instruction: "Press to Record"});
     this.refs["PROGRESS"].stopProgress();
     this.refs["PROGRESS"].resetProgress();
+    this.refs["STOPWATCH"].stop();
   },
   
   startCountdown: function () {
@@ -174,7 +178,7 @@ var Record = React.createClass ({
 	<Text style={styles.recordTime}>
 
         </Text>
-	<Stopwatch />
+	<Stopwatch ref={"STOPWATCH"}/>
 	
 	
         

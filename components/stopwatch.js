@@ -42,7 +42,7 @@ var Stopwatch = React.createClass({
     var parsedNumber;
     if (number < 9) {
       parsedNumber = this.addZero(this.incrementNumber(number));
-    } else if (number === 9) {
+    } else if (number >= 9 && number < 59) {
       parsedNumber = this.incrementNumber(number);
     } else if (number === 59) {
       parsedNumber = "00";
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     // justifyContent: "center"
   },
   stopwatch: {
-    fontSize: 90 ,
+    fontSize: 70 ,
     textAlign: "center"
     // color:"#000"
   }
