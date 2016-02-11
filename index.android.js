@@ -19,7 +19,7 @@ import React, {
 import Icon from "react-native-vector-icons/FontAwesome";
 import Dropdown from "react-native-dropdown-android";
 import Record from "./components/record";
-
+// import Stopwatch from "./components/stopwatch";
 // var Icon  = require("react-native-vector-icons/FontAwesome");
 // import * as Icon from "react-native-vector-icons/FontAwesome";
 
@@ -124,6 +124,7 @@ var SimpleScreenRecorder = React.createClass ({
         </ToolbarAndroid>
         </View>
 	<Record />
+	
 	
         </DrawerLayoutAndroid>
     );

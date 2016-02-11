@@ -21,8 +21,8 @@ import React, {
 } from "react-native";
 
 import Icon from "react-native-vector-icons/FontAwesome";
-// import TimerMixin from "react-timer-mixin";
 import MovingBar from "./movingbar";
+import Stopwatch from "./stopwatch";
 // var TimerMixin = require('react-timer-mixin'); // Import wont allow for interval unmount
 
 var AnimateIcon = Animated.createAnimatedComponent(Icon);
@@ -174,6 +174,7 @@ var Record = React.createClass ({
 	<Text style={styles.recordTime}>
 
         </Text>
+	<Stopwatch />
 	
 	
         

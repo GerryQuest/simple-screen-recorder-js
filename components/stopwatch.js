@@ -13,30 +13,32 @@ import React, {
 
 var Stopwatch = React.createClass({
   getInitialState: function () {
-    return {seconds: 0,
-	    minutes: 0};
+    return {seconds: "00",
+	    minutes: "00"};
   },
-  incrementSeconds: function () {
-    this.setState({seconds: this.state.seconds + 1});
-  },
-  incrementMinutes: function () {
-    this.setState({minutes: this.state.minutes + 1});
+  // incrementSeconds: function () {
+  //   this.setState({seconds: this.state.seconds + 1});
+  // },
+  // incrementMinutes: function () {
+  //   this.setState({minutes: this.state.minutes + 1});
+  // },
+  incrementMinute: function () {
+    if (typeof this.state.minutes === "string") {
+      var min = parseInt(this.state.minutes);
+      this.setState({minutes: this.parseSecondsAndMinutes(min)});
+    
+    } else {
+      this.setState({minutes: this.parseSecondsAndMinutes(this.state.minutes)});
+    } 
   },
   incrementNumber: function (number) {
     return number + 1;
   },
   addZero: function (digit) {
-    // var number;
-    // if (digit < 10) {
-    //   number = "0" + digit;
-    // }
-    // return number;
 
-      
-    
     return digit < 10 ? "0" + digit : digit;
   },
-  parseSecondAndMinute: function (number) {
+  parseSecondsAndMinutes: function (number) {
     var parsedNumber;
     if (number < 9) {
       parsedNumber = this.addZero(this.incrementNumber(number));
@@ -44,59 +46,69 @@ var Stopwatch = React.createClass({
       parsedNumber = this.incrementNumber(number);
     } else if (number === 59) {
       parsedNumber = "00";
+      // increment minute here
+      this.incrementMinute();
     }
     return parsedNumber;
   } ,
-  start: function () {
-
+  run: function () {
     // SO every second do the following. Maybe put in function
 
     if (typeof this.state.seconds === "string") {
-      // this.setState({seconds: parseInt(this.state.seconds)});
-      // if (this.state.seconds < 10) {
-      // 	this.incrementSeconds(); 
-      // 	// Add 0 to it	
-      // }
       var second = parseInt(this.state.seconds);
-
-      // wont work below because number maybe 59 in which case incrementing is pointless
-      // unless I check for 60
-      // second = isSingleDigitSecond(second) ? this.addZero(this.incrementNumber(second)) : this.incrementNumber(second);
-      
       // could use case instead
-      if (second < 9) {
-	second = this.addZero(this.incrementNumber(second));
-      } else if (second === 9) {
-	second = this.incrementNumber(second);
-      } else if (second === 59) {
-	second = "00";
-      }
-
-      this.setState({seconds: second});
+      var parsedSec  = this.parseSecondsAndMinutes(second);
+      this.setState({seconds: parsedSec});
  
     } else  {
-      if (second < 9) {
-	second = this.addZero(this.incrementNumber(second));
-      } else if (second === 9) {
-	second = this.incrementNumber(second);
-      } else if (second === 59) {
-	second = "00";
-      }
-      this.setState({seconds: second});
+      this.setState({seconds: this.parseSecondsAndMinutes(this.state.seconds )});
     }
+
+
+
+    // this only needs to run when second is 59
+    // if (typeof this.state.minutes === "string") {
+    //   var min = parseInt(this.state.minutes);
+    //   this.setState({minutes: this.parseSecondsAndMinutes(min)});
     
-  
-    // this.interval = setInterval(, 1000);
+    // } else {
+    //   this.setState({minutes: this.parseSecondsAndMinutes(this.state.minutes)});
+    // }
+  },
+  start: function () {
+
+    this.interval = setInterval(this.run, 1000);
   },
   stop: function () {
-    
+    clearInterval(this.interval);
   },
   componentWillUnmount: function () {
     clearInterval(this.interval);
   },
   render: function () {
-   return (); 
+   return (
+     <View style={styles.stopWatchView}>
+     <Text style={styles.stopwatch}>{this.state.minutes}:{this.state.seconds}</Text>
+     </View>
+   ); 
   }
 });
 
+const styles = StyleSheet.create({
+  stopWatchView: {
+    alignItems: "center"// ,
+    // alignSelf:"center"
+    // ,
+    // flexDirection: "row",
+    // justifyContent: "center"
+  },
+  stopwatch: {
+    fontSize: 90 ,
+    textAlign: "center"
+    // color:"#000"
+  }
+  
+});
+
 module.exports = Stopwatch;
+
