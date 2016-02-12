@@ -75,6 +75,11 @@ var Stopwatch = React.createClass({
     //   this.setState({minutes: this.parseSecondsAndMinutes(this.state.minutes)});
     // }
   },
+  reset: function () {
+    clearInterval(this.interval);
+    this.setState({seconds: "00"});
+    this.setState({minutes: "00"});
+  },
   start: function () {
 
     this.interval = setInterval(this.run, 1000);

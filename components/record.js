@@ -119,7 +119,7 @@ var Record = React.createClass ({
     this.setState({instruction: "Press to Record"});
     this.refs["PROGRESS"].stopProgress();
     this.refs["PROGRESS"].resetProgress();
-    this.refs["STOPWATCH"].stop();
+    this.refs["STOPWATCH"].reset();
   },
   
   startCountdown: function () {
