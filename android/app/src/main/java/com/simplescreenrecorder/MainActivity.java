@@ -38,6 +38,7 @@ public class MainActivity extends ReactActivity {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
         new VectorIconsPackage(),
-        new DropdownPackage());
+        new DropdownPackage()
+        new RecordScreenPackage());
     }
 }

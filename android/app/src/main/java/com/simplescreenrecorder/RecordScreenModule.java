@@ -3,7 +3,7 @@
   React Native Module that allows Native functionality in Java to be,
   applied using JavaScript.
 */
-public class ScreenRecordModule extends ReactContextBaseJavaModule
+public class RecordScreenModule extends ReactContextBaseJavaModule
 implements ActivityEventListener {
     private static final String VIDEO_MIME_TYPE = "video/avc";
     private static final int VIDEO_WIDTH = 640;
@@ -33,7 +33,7 @@ implements ActivityEventListener {
 
 
 
-    public ScreenRecordModule (ReactApplicationContext reactContext) {
+    public RecordScreenModule (ReactApplicationContext reactContext) {
 	     super(reactContext);
        // Add the listener for `onActivityResult`
        reactContext.addActivityEventListener(this);
@@ -52,7 +52,7 @@ implements ActivityEventListener {
 
     @ReactMethod
     public void stopRecording() {
-
+      releaseEncoders();
     }
 
     @ReactMethod
@@ -132,6 +132,18 @@ implements ActivityEventListener {
         int screenWidth = metrics.widthPixels;
         int screenHeight = metrics.heightPixels;
         int screenDensity = metrics.densityDpi;
+
+        /* Virtual display is created with specified HEIGHT and WIDTH dimensions
+          it then outputs screen to the MUXER created before.
+          This virtualScreen is outputted to the surface of the Encoder, which in return
+          becomes the input for the Muxer which outputs the file in the specified format.
+         */
+        mMediaProjection.createVirtualDisplay("Recorded Display", screenWidth, screenHeight, screenDensity,
+                DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR, mInputSurface,
+                null /*Callbacks*/, null /*Handler*/);
+
+        videoCount = videoCount + 1; // Number of recorder videos
+        drainEncoders();
     }
     /*
         Sends/Drains bytes from the Encoder to the Muxer.
