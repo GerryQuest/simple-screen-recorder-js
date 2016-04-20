@@ -41,7 +41,7 @@ implements ActivityEventListener {
 
     @Override
     public String getName() {
-	     return "ScreenRecordModule";
+	     return "RecordScreenModule";
     }
 
     // This Method is exposed to JavaScript and React

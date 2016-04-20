@@ -17,7 +17,8 @@ import React, {
   Alert,
   Animated,
   Easing,
-  ProgressBarAndroid
+  ProgressBarAndroid,
+  NativeModules
 } from "react-native";
 
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -106,6 +107,15 @@ var Record = React.createClass ({
       // Start stopwatch here // Maybe pass stopwatch start func as prop
       this.refs["STOPWATCH"].start(); // this already has an interval
       // this.refs["STOPWATCH"].run();
+
+      // MAYBE start recording here -- Actually dont put it here as this called repeatidly
+
+      // Maybe above is wrong and its okay to start recording here
+      // Because the countdown state is checked
+      // Will need to make sure nothing is recording before though
+
+      // Mayve change countdown to 0 instead of 1
+      
     } else {
       this.setState({countdown: this.state.countdown - 1});
       // this.refs["STOPWATCH"].run();
@@ -130,7 +140,7 @@ var Record = React.createClass ({
       this.interval = setInterval(this.minusOne, 1000);
       
     } else {
-      
+      // Maybe stop here
     }
 
   },
