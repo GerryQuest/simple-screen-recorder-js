@@ -24,6 +24,7 @@ import React, {
 import Icon from "react-native-vector-icons/FontAwesome";
 import MovingBar from "./movingbar";
 import Stopwatch from "./stopwatch";
+import RecordScreen from "./recordscreen";
 // var TimerMixin = require('react-timer-mixin'); // Import wont allow for interval unmount
 
 var AnimateIcon = Animated.createAnimatedComponent(Icon);
@@ -115,7 +116,8 @@ var Record = React.createClass ({
       // Will need to make sure nothing is recording before though
 
       // Mayve change countdown to 0 instead of 1
-      
+
+      RecordScreen.initRecording(); // Exposed React Native Method
     } else {
       this.setState({countdown: this.state.countdown - 1});
       // this.refs["STOPWATCH"].run();
