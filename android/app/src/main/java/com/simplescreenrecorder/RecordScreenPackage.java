@@ -14,6 +14,7 @@ public class RecordScreenPackage implements ReactPackage {
   public List<NativeModule> createNativeModuless(ReactApplicationContext reactContext) {
     List<NativeModule> modules = new ArrayList<>();
     modules.add(new RecordScreenModule(reactContext));
+    return modules;
   }
 
   @Override
