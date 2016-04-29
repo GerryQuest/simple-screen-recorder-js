@@ -151,8 +151,10 @@ var Record = React.createClass ({
     if (this.state.color !== "rgb(255, 28, 28)") {
       this.setState({color: "rgb(255, 28, 28)"},  this.startCountdown());
     } else {
+      RecordScreen.stopRecording();
       this.setState({color: "rgb(156,41,41)"}, this.stopCountdown());
       this.refs["PROGRESS"].hideProgress(); // hides but does not stop
+      
     }
     
   },

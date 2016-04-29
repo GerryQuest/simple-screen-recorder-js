@@ -1,4 +1,4 @@
-
+package com.simplescreenrecorder;
 /*
   React Native Module that allows Native functionality in Java to be,
   applied using JavaScript.
@@ -23,14 +23,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Surface;
-// import android.view.View;
-// import android.view.Menu;
+import android.view.View;
+import android.view.Menu;
 // import android.view.MenuItem;
 // import android.widget.Button;
+import android.app.Activity;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.List;
+import java.util.ArrayList;
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -41,7 +44,7 @@ import com.facebook.react.bridge.ReactMethod;
 public class RecordScreenModule extends ReactContextBaseJavaModule
 implements ActivityEventListener {
     private static final String VIDEO_MIME_TYPE = "video/avc";
-    private static final int VIDEO_WIDTH = 640;
+    private static final int VIDEO_WIDTH = 640; // maybe try get screen hight and width
     private static final int VIDEO_HEIGHT = 480;
 
     // Manages Retrieval of mediaProject Token and Applies the permission intent
@@ -69,7 +72,8 @@ implements ActivityEventListener {
 
 
     public RecordScreenModule (ReactApplicationContext reactContext) {
-	     super(reactContext);
+	     super(reactContext); // Passess reactContext to the constructor of the super class
+
        // Add the listener for `onActivityResult`
        reactContext.addActivityEventListener(this);
     }
@@ -95,17 +99,19 @@ implements ActivityEventListener {
       // Maybe a good Idea to check if Intent has already been created to avoid slow downs
       // Could use if statement to check
 
-      mMediaProjectionManager = (MediaProjectionManager) getSystemService(
-      Context.MEDIA_PROJECTION_SERVICE);
+      Activity currentActivity = getCurrentActivity();
 
-      intent permissionIntent = mMediaProjectionManager.createScreenCaptureIntent();
-      startActivityForResult(permissionIntent, REQUEST_CODE_CAPTURE_PERM);
+      mMediaProjectionManager = (MediaProjectionManager) super.getReactApplicationContext().
+      getSystemService(Context.MEDIA_PROJECTION_SERVICE);
+
+      Intent permissionIntent = mMediaProjectionManager.createScreenCaptureIntent();
+      currentActivity.startActivityForResult(permissionIntent, REQUEST_CODE_CAPTURE_PERM);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
       if (REQUEST_CODE_CAPTURE_PERM == requestCode) {
-        if (resultCode == RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
           mMediaProjection = mMediaProjectionManager.getMediaProjection(resultCode, data);
           startRecording();
         } else {
@@ -144,10 +150,22 @@ implements ActivityEventListener {
 
     private void startRecording() {
         /*File dir = new File("/mnt/shell/emulated/0");*/
-        File dir = new File("/sdcard");
+        // File dir = new File("/sdcard");
         // Maybe better to use date and time instead of videoCount
         String fileName = "RecordedVideo_" + videoCount + ".mp4";
-        DisplayManager displayManeger = (DisplayManager) getSystemService(Context.DISPLAY_SERVICE);
+        File tempVideoFile = null;
+        // Create Temporary file
+        try {
+          File dir = new File("/sdcard/SimpleScreenVideos/");
+          dir.mkdirs();
+          tempVideoFile = File.createTempFile("RecordedVideo", ".mp4", dir);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+
+        DisplayManager displayManager = (DisplayManager) super.getReactApplicationContext().
+        getSystemService(Context.DISPLAY_SERVICE);
+
         Display defaultDisplay = displayManager.getDisplay(Display.DEFAULT_DISPLAY);
         if (defaultDisplay == null) {
           throw new RuntimeException("No display found.");
@@ -157,13 +175,14 @@ implements ActivityEventListener {
         /* Muxer converts input to output - so video input is outputted and
          stored as file on sd card */
          try {
-           mMuxer = new MediaMuxer(dir + "/" + fileName, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+          //  mMuxer = new MediaMuxer(dir + "/" + fileName, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+          mMuxer = new MediaMuxer(tempVideoFile.getAbsolutePath(), MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
          } catch (IOException e) {
            e.printStackTrace();
          }
 
          // Get the display size and density.
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        DisplayMetrics metrics = super.getReactApplicationContext().getResources().getDisplayMetrics();
         int screenWidth = metrics.widthPixels;
         int screenHeight = metrics.heightPixels;
         int screenDensity = metrics.densityDpi;

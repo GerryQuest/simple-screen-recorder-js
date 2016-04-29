@@ -9,6 +9,8 @@ import com.chymtt.reactnativedropdown.DropdownPackage;
 import java.util.Arrays;
 import java.util.List;
 
+import com.simplescreenrecorder.RecordScreenPackage;
+
 public class MainActivity extends ReactActivity {
 
     /**
