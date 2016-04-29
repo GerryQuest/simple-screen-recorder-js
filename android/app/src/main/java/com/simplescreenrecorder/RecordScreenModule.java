@@ -68,7 +68,7 @@ implements ActivityEventListener {
     };
 
     private int videoCount = 0;
-
+    private File tempVideoFile = null;
 
 
     public RecordScreenModule (ReactApplicationContext reactContext) {
@@ -153,7 +153,7 @@ implements ActivityEventListener {
         // File dir = new File("/sdcard");
         // Maybe better to use date and time instead of videoCount
         String fileName = "RecordedVideo_" + videoCount + ".mp4";
-        File tempVideoFile = null;
+        // File tempVideoFile = null;
         // Create Temporary file
         try {
           File dir = new File("/sdcard/SimpleScreenVideos/");
@@ -198,6 +198,27 @@ implements ActivityEventListener {
 
         videoCount = videoCount + 1; // Number of recorder videos
         drainEncoders();
+    }
+
+    @ReactMethod
+    public void saveAs(String filename) {
+
+      // rename the temporary file
+      try {
+        File dir = new File("/sdcard/SimpleScreenVideos/");
+        tempVideoFile.renameTo(dir + filename);
+
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+
+    /*
+      Maybe call this from javascript to see whether a file is reanmed
+    */
+    @ReactMethod
+    public void checkFileHasBeenRenamed(File f) {
+
     }
     /*
         Sends/Drains bytes from the Encoder to the Muxer.
