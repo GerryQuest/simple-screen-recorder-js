@@ -118,6 +118,7 @@ var Record = React.createClass ({
       // Mayve change countdown to 0 instead of 1
 
       RecordScreen.initRecording(); // Exposed React Native Method
+      this.props.available(true);
     } else {
       this.setState({countdown: this.state.countdown - 1});
       // this.refs["STOPWATCH"].run();

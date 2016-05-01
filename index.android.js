@@ -35,7 +35,14 @@ import RecordScreen from "./components/recordscreen";
 
 var SimpleScreenRecorder = React.createClass ({
 
-
+  getInitialState: function () {
+    return {
+      recordingAvailable: false
+    };
+  },
+  setRecordingAvailable: function (status) {
+    this.setState({recordingAvailable: status});
+  },
   toggleDrawer: function () {
 
     this.refs['DRAWER'].openDrawer();
@@ -46,11 +53,18 @@ var SimpleScreenRecorder = React.createClass ({
   },
   parseFilename: function (filename) {
     RecordScreen.saveAs(filename);
+    
+    // if fileRecorded has been set to true then saveAs else alert error
   },
   showSaveVideoDialog: function () {
+    if (!this.state.recordingAvailable) {
+      return Alert.alert("Error", "No Recordings to save!",
+		 [{text: "OK", onPress: () => {console.log("OK");}}]);
+    }
+    
     var options = {
-      title: 'Hello, World!',
-      content: 'I\'m just simple Dialog',
+      title: "Save As",
+      content: "Location: /sdcard/SimpleScreenVideos/",
       positiveText: 'OK',
       negativeText: 'Cancel',
       input: {allowEmptyInput: false,
@@ -156,7 +170,7 @@ var SimpleScreenRecorder = React.createClass ({
                 </View>
         </ToolbarAndroid>
         </View>
-	<Record />
+	<Record available={this.setRecordingAvailable}/>
 	
 	
         </DrawerLayoutAndroid>
