@@ -205,10 +205,11 @@ implements ActivityEventListener {
 
       // rename the temporary file
       try {
-        File dir = new File("/sdcard/SimpleScreenVideos/");
-        tempVideoFile.renameTo(dir + filename);
+        File dir = new File("/sdcard/SimpleScreenVideos/" + filename);
+        // tempVideoFile.renameTo(dir + filename);
+        tempVideoFile.renameTo(dir);
 
-      } catch (IOException e) {
+      } catch (Exception e) {
         e.printStackTrace();
       }
     }
@@ -217,7 +218,7 @@ implements ActivityEventListener {
       Maybe call this from javascript to see whether a file is reanmed
     */
     @ReactMethod
-    public void checkFileHasBeenRenamed(File f) {
+    public void checkFileHasBeenRenamed(String f) {
 
     }
     /*

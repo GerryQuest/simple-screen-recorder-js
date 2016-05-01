@@ -42,7 +42,13 @@ var SimpleScreenRecorder = React.createClass ({
   showPopupMenu: function () {
     console.log("test");
   },
-
+  saveVideoDialog: function () {
+    Alert.alert("Save As", "Input",
+	       [{text: "Save",
+		 onPress: () => console.log("saved")},
+	       {text: "Cancel",
+		onPress: () => console.log("Canceled")}]);
+  },
   onActionSelected: function (position) {
     if (position === 0) {
          console.log("test");
@@ -53,6 +59,12 @@ var SimpleScreenRecorder = React.createClass ({
       // this.setState({barsIcon: r(this.state.jj.uri)});
       // Alert.alert("hi", JSON.stringify(so));
       // Alert.alert("hi", so.uri);
+      this.saveVideoDialog();
+      
+    } else if (position === 1) {
+      
+    } else if (position === 2) {
+      
     }
     
   },
