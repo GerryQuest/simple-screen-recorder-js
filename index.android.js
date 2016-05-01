@@ -19,6 +19,8 @@ import React, {
 import Icon from "react-native-vector-icons/FontAwesome";
 import Dropdown from "react-native-dropdown-android";
 import Record from "./components/record";
+import DialogAndroid from "react-native-dialogs";
+import RecordScreen from "./components/recordscreen";
 // import Stopwatch from "./components/stopwatch";
 // var Icon  = require("react-native-vector-icons/FontAwesome");
 // import * as Icon from "react-native-vector-icons/FontAwesome";
@@ -42,6 +44,24 @@ var SimpleScreenRecorder = React.createClass ({
   showPopupMenu: function () {
     console.log("test");
   },
+  parseFilename: function (filename) {
+    RecordScreen.saveAs(filename);
+  },
+  showSaveVideoDialog: function () {
+    var options = {
+      title: 'Hello, World!',
+      content: 'I\'m just simple Dialog',
+      positiveText: 'OK',
+      negativeText: 'Cancel',
+      input: {allowEmptyInput: false,
+	      prefill: "Video_NAME.mp4",
+	      callback: (filename) => { this.parseFilename(filename);}}
+    };
+
+    var dialog = new DialogAndroid();
+    dialog.set(options);
+    dialog.show();
+  },
   saveVideoDialog: function () {
     Alert.alert("Save As", "Input",
 	       [{text: "Save",
@@ -59,7 +79,8 @@ var SimpleScreenRecorder = React.createClass ({
       // this.setState({barsIcon: r(this.state.jj.uri)});
       // Alert.alert("hi", JSON.stringify(so));
       // Alert.alert("hi", so.uri);
-      this.saveVideoDialog();
+      // this.saveVideoDialog();
+      this.showSaveVideoDialog();
       
     } else if (position === 1) {
       

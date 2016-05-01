@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.simplescreenrecorder.RecordScreenPackage;
+import com.aakashns.reactnativedialogs.ReactNativeDialogsPackage;
+
 
 public class MainActivity extends ReactActivity {
 
@@ -41,6 +43,7 @@ public class MainActivity extends ReactActivity {
         new MainReactPackage(),
         new VectorIconsPackage(),
         new DropdownPackage(),
-        new RecordScreenPackage());
+        new RecordScreenPackage(),
+        new ReactNativeDialogsPackage());
     }
 }
