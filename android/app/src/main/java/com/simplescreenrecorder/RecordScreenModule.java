@@ -203,6 +203,10 @@ implements ActivityEventListener {
     @ReactMethod
     public void saveAs(String filename) {
 
+      if (!filename.endsWith(".mp4")) {
+        filename = filename.concat(".mp4");
+      }
+      
       // rename the temporary file
       try {
         File dir = new File("/sdcard/SimpleScreenVideos/" + filename);
