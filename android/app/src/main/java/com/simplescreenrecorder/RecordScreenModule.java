@@ -220,11 +220,11 @@ implements ActivityEventListener {
       Saves the video even if a file with the same name exits
     */
     @ReactMethod
-    public void fileExistsSaveAs (String filename) {
+    public void fileExistsSaveAs (String filename, Callback errorCallback) {
       try {
         save(filename);
       } catch {Exception e} {
-        
+        errorCallback(e.getMessage());
         e.printStackTrace();
       }
 
