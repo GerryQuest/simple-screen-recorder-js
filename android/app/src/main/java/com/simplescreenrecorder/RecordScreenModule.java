@@ -39,6 +39,7 @@ import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.Callback;
 
 
 public class RecordScreenModule extends ReactContextBaseJavaModule
@@ -69,7 +70,7 @@ implements ActivityEventListener {
 
     private int videoCount = 0;
     private File tempVideoFile = null;
-
+    private File defaultDir = new File("/sdcard/SimpleScreenVideos/");
 
     public RecordScreenModule (ReactApplicationContext reactContext) {
 	     super(reactContext); // Passess reactContext to the constructor of the super class
@@ -200,20 +201,63 @@ implements ActivityEventListener {
         drainEncoders();
     }
 
+    public void checkFileAlredyExists (String filename) {
+      defaultDir + filename
+      return
+
+    }
+
+    /*
+      Saves video regardless of filename conflict
+    */
+    public void save (File filename) throws Exception {
+
+      return tempVideoFile.renameTo(filename);
+
+    }
+
+    /*
+      Saves the video even if a file with the same name exits
+    */
     @ReactMethod
-    public void saveAs(String filename) {
+    public void fileExistsSaveAs (String filename) {
+      try {
+        save(filename);
+      } catch {Exception e} {
+        
+        e.printStackTrace();
+      }
+
+    }
+
+
+
+    @ReactMethod
+    public void saveAs(String filename, Callback errorCallback, Callback fileExistsCallback
+     /*, Callback successCallback */) {
 
       if (!filename.endsWith(".mp4")) {
         filename = filename.concat(".mp4");
       }
-      
+
       // rename the temporary file
       try {
         File dir = new File("/sdcard/SimpleScreenVideos/" + filename);
         // tempVideoFile.renameTo(dir + filename);
-        tempVideoFile.renameTo(dir);
+        if (dir.exists()) {
+          fileExistsCallback.invoke("Filename already exists");
+        } else if (!save(dir)) {
+          errorCallback.invoke("Error, Video could not be saved.");
+          // if (!tempVideoFile.renameTo(dir)) {
+          //   // Error renameTo did not work
+          //   // return saving error to user
+          //   errorCallback.invoke("Error, Video could not be saved.");
+          // }
+        }
+
 
       } catch (Exception e) {
+        errorCallback.invoke(e.getMessage());
         e.printStackTrace();
       }
     }
