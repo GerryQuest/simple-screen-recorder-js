@@ -201,19 +201,28 @@ implements ActivityEventListener {
         drainEncoders();
     }
 
-    public void checkFileAlredyExists (String filename) {
+    /*public void checkFileAlredyExists (String filename) {
       defaultDir + filename
       return
 
-    }
+    }*/
 
     /*
       Saves video regardless of filename conflict
+      Save is done by renaming temporary video
     */
-    public void save (File filename) throws Exception {
+    public boolean save (File filename) throws Exception {
 
       return tempVideoFile.renameTo(filename);
 
+    }
+
+    public String addMP4Extension(String name) {
+      String filename;
+      if (!name.endsWith(".mp4")) {
+        filename = name.concat(".mp4");
+      } else { filename = name;}
+      return filename
     }
 
     /*
@@ -221,10 +230,17 @@ implements ActivityEventListener {
     */
     @ReactMethod
     public void fileExistsSaveAs (String filename, Callback errorCallback) {
+
+      filename = addMP4Extension(filename);
+
       try {
-        save(filename);
-      } catch {Exception e} {
-        errorCallback(e.getMessage());
+        File file = new File(filename);
+        if (!save(file)) {
+          // save returns false
+          // errorCallback.invoke("Could not Save " + filename);
+        }
+      } catch (Exception e) {
+        errorCallback.invoke(e.getMessage());
         e.printStackTrace();
       }
 
@@ -236,9 +252,11 @@ implements ActivityEventListener {
     public void saveAs(String filename, Callback errorCallback, Callback fileExistsCallback
      /*, Callback successCallback */) {
 
-      if (!filename.endsWith(".mp4")) {
+      /*if (!filename.endsWith(".mp4")) {
         filename = filename.concat(".mp4");
-      }
+      } */
+
+      filename = addMP4Extension(filename);
 
       // rename the temporary file
       try {

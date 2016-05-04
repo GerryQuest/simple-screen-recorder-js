@@ -58,14 +58,19 @@ var SimpleScreenRecorder = React.createClass ({
 	" Already exits. Do you want to replace this file?",
       positiveText: "Yes",
       negativeText: "No",
-      onPositive: () => {RecordScreen.fileExistsSaveAs(filename);}
+      onPositive: () => {RecordScreen.fileExistsSaveAs(filename,
+						      (error) => {Alert.alert(error);});}
     };
+
+    var dialog = new DialogAndroid();
+    dialog.set(options);
+    dialog.show();
     
   },
   parseFilename: function (filename) {
     RecordScreen.saveAs(filename,
 			(error) => {Alert.alert(error);},
-		       );
+		       () => {this.showConfirmReplaceDialog(filename);});
     
     // if fileRecorded has been set to true then saveAs else alert error
   },
