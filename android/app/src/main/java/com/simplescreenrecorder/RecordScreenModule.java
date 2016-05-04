@@ -155,11 +155,15 @@ implements ActivityEventListener {
         // Maybe better to use date and time instead of videoCount
         String fileName = "RecordedVideo_" + videoCount + ".mp4";
         // File tempVideoFile = null;
+
+        tempVideoFile = null;
+
         // Create Temporary file
         try {
           File dir = new File("/sdcard/SimpleScreenVideos/");
           dir.mkdirs();
-          tempVideoFile = File.createTempFile("RecordedVideo", ".mp4", dir);
+
+          tempVideoFile = File.createTempFile("video", ".mp4", dir);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -177,6 +181,7 @@ implements ActivityEventListener {
          stored as file on sd card */
          try {
           //  mMuxer = new MediaMuxer(dir + "/" + fileName, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+          mMuxer = null;
           mMuxer = new MediaMuxer(tempVideoFile.getAbsolutePath(), MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
          } catch (IOException e) {
            e.printStackTrace();
@@ -222,7 +227,7 @@ implements ActivityEventListener {
       if (!name.endsWith(".mp4")) {
         filename = name.concat(".mp4");
       } else { filename = name;}
-      return filename
+      return filename;
     }
 
     /*
@@ -366,7 +371,7 @@ implements ActivityEventListener {
             mMediaProjection = null;
         }
         mVideoBufferInfo = null;
-        mDrainEncoderRunnable = null;
+        // mDrainEncoderRunnable = null;
         mTrackIndex = -1;
     }
 }

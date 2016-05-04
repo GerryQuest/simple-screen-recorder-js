@@ -51,7 +51,7 @@ var SimpleScreenRecorder = React.createClass ({
   showPopupMenu: function () {
     console.log("test");
   },
-  showConfirmReplaceDialog: function (filename) {
+ /* showConfirmReplaceDialog: function (filename) {
     var options = {
       title: "Confirm save as",
       content: filename +
@@ -76,8 +76,9 @@ var SimpleScreenRecorder = React.createClass ({
   },
   showSaveVideoDialog: function () {
     if (!this.state.recordingAvailable) {
-      return Alert.alert("Error", "No Recordings to save!",
-		 [{text: "OK", onPress: () => {console.log("OK");}}]);
+      // return Alert.alert("Error", "No Recordings to save!",
+      // 		 [{text: "OK", onPress: () => {console.log("OK");}}]);
+      return Alert.alert("Error", "No Recording to save!");
     }
     
     var options = {
@@ -100,7 +101,7 @@ var SimpleScreenRecorder = React.createClass ({
 		 onPress: () => console.log("saved")},
 	       {text: "Cancel",
 		onPress: () => console.log("Canceled")}]);
-  },
+  } ,*/
   onActionSelected: function (position) {
     if (position === 0) {
          console.log("test");
