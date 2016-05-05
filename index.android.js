@@ -51,14 +51,14 @@ var SimpleScreenRecorder = React.createClass ({
   showPopupMenu: function () {
     console.log("test");
   },
- /* showConfirmReplaceDialog: function (filename) {
+  showConfirmReplaceDialog: function (filename) {
     var options = {
       title: "Confirm save as",
       content: filename +
 	" Already exits. Do you want to replace this file?",
       positiveText: "Yes",
       negativeText: "No",
-      onPositive: () => {RecordScreen.fileExistsSaveAs(filename,
+      onPositive: () => {RecordScreen.replaceExistingFile(filename,
 						      (error) => {Alert.alert(error);});}
     };
 
@@ -101,7 +101,7 @@ var SimpleScreenRecorder = React.createClass ({
 		 onPress: () => console.log("saved")},
 	       {text: "Cancel",
 		onPress: () => console.log("Canceled")}]);
-  } ,*/
+  } ,
   onActionSelected: function (position) {
     if (position === 0) {
          console.log("test");

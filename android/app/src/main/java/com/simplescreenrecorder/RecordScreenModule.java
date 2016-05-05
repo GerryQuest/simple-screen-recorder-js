@@ -217,7 +217,7 @@ implements ActivityEventListener {
       Save is done by renaming temporary video
     */
     public boolean save (File filename) throws Exception {
-
+      // Maybe its not removing file because it already exists
       return tempVideoFile.renameTo(filename);
 
     }
@@ -234,16 +234,42 @@ implements ActivityEventListener {
       Saves the video even if a file with the same name exits
     */
     @ReactMethod
-    public void fileExistsSaveAs (String filename, Callback errorCallback) {
-
+    public void replaceExistingFile (String filename, Callback errorCallback) {
+      // fileExistsSaveAs
       filename = addMP4Extension(filename);
 
+      // File file = new File("Video_NAME.mp4");
+
       try {
-        File file = new File(filename);
-        if (!save(file)) {
-          // save returns false
-          // errorCallback.invoke("Could not Save " + filename);
+        File oldFile = new File (defaultDir, filename);
+        // if (oldFile.delete()) {
+        //   errorCallback.invoke("File was deleted " + filename + " " + tempVideoFile);
+        // } else {
+        //   errorCallback.invoke("Could not delete " + filename + " " + tempVideoFile);
+        //   // errorCallback.invoke("Could not delete " + filename + " " + tempVideoFile.getName());
+        // }
+
+        if (!oldFile.delete()) {
+          errorCallback.invoke("File was deleted " + filename + " " + tempVideoFile);
+        } else {
+          File file = new File(defaultDir, filename);
+
+          if (!save(file)) {
+            // save returns false
+            errorCallback.invoke("Could not Save " + filename);
+          } else {
+            errorCallback.invoke("Saved file " + filename);
+          }
         }
+
+        // File file = new File(filename);
+        //
+        // if (!save(file)) {
+        //   // save returns false
+        //   errorCallback.invoke("Could not Save " + filename);
+        // } else {
+        //   errorCallback.invoke("Saved file " + filename);
+        // }
       } catch (Exception e) {
         errorCallback.invoke(e.getMessage());
         e.printStackTrace();
