@@ -34,6 +34,13 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.ArrayList;
+// import java.nio.file.Files;
+// import java.nio.file.FileAlreadyExistsException;
+// import java.nio.file.Path;
+import java.nio.channels.FileChannel;
+import java.io.FileNotFoundException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -217,9 +224,28 @@ implements ActivityEventListener {
       Save is done by renaming temporary video
     */
     public boolean save (File filename) throws Exception {
-      // Maybe its not removing file because it already exists
-      return tempVideoFile.renameTo(filename);
+      boolean successful = false;
+      // return tempVideoFile.renameTo(filename);
 
+      // Path copied = Files.copy(tempVideoFile.getPath(), filename.getPath());
+      // if (copied instanceof Path) {
+      //   successful = true;
+      // }
+      FileInputStream inputStream = new FileInputStream(tempVideoFile);
+      FileOutputStream outputStream = new FileOutputStream(filename);
+      FileChannel inputChannel = inputStream.getChannel();
+      FileChannel outputChannel = outputStream.getChannel();
+
+      long fileSize = inputChannel.size();
+      long transferSize = inputChannel.transferTo(0, fileSize, outputChannel);
+      inputStream.close();
+      outputStream.close();
+
+      if (transferSize == fileSize) {
+        successful = true;
+      }
+
+      return successful;
     }
 
     public String addMP4Extension(String name) {
@@ -259,6 +285,8 @@ implements ActivityEventListener {
             errorCallback.invoke("Could not Save " + filename);
           } else {
             errorCallback.invoke("Saved file " + filename);
+            // need to update filename in javascript react to use this new name
+            // need update tempVideoFile to use this as new name
           }
         }
 
@@ -270,6 +298,8 @@ implements ActivityEventListener {
         // } else {
         //   errorCallback.invoke("Saved file " + filename);
         // }
+      } catch (FileNotFoundException e) {
+        errorCallback.invoke("File Not found");
       } catch (Exception e) {
         errorCallback.invoke(e.getMessage());
         e.printStackTrace();
