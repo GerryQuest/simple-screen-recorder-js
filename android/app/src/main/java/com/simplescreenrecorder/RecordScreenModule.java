@@ -51,9 +51,10 @@ import com.facebook.react.bridge.Callback;
 
 public class RecordScreenModule extends ReactContextBaseJavaModule
 implements ActivityEventListener {
+    private DisplayMetrics metrics;
     private static final String VIDEO_MIME_TYPE = "video/avc";
-    private static final int VIDEO_WIDTH = 640; // maybe try get screen hight and width
-    private static final int VIDEO_HEIGHT = 480;
+    private static final int VIDEO_WIDTH = 1280; // maybe try get screen hight and width
+    private static final int VIDEO_HEIGHT = 720;
 
     // Manages Retrieval of mediaProject Token and Applies the permission intent
     private MediaProjectionManager mMediaProjectionManager;
@@ -84,6 +85,7 @@ implements ActivityEventListener {
 
        // Add the listener for `onActivityResult`
        reactContext.addActivityEventListener(this);
+       metrics = super.getReactApplicationContext().getResources().getDisplayMetrics();
     }
 
     @Override
@@ -131,7 +133,12 @@ implements ActivityEventListener {
     private void prepareVideoEncoder() {
       System.out.println("Preparing Video Encoder");
       mVideoBufferInfo = new MediaCodec.BufferInfo();
-      MediaFormat format = MediaFormat.createVideoFormat(VIDEO_MIME_TYPE,VIDEO_WIDTH, VIDEO_HEIGHT);
+      // MediaFormat format = MediaFormat.createVideoFormat(VIDEO_MIME_TYPE,VIDEO_WIDTH, VIDEO_HEIGHT);
+
+      // AVC works best with pixel lengths rounded to nearest 10 other it cause formating problems
+      /*int width = (int) Math.floor(metrics.widthPixels/10) * 10; // Returns width to nearest 10
+      int height = (int) Math.floor(metrics.heightPixels/10) * 10; */
+      MediaFormat format = MediaFormat.createVideoFormat(VIDEO_MIME_TYPE, VIDEO_WIDTH, VIDEO_HEIGHT);
       int frameRate = 30;
 
       // The following Properties are needed, the MediaCodec could failt without them
@@ -195,7 +202,7 @@ implements ActivityEventListener {
          }
 
          // Get the display size and density.
-        DisplayMetrics metrics = super.getReactApplicationContext().getResources().getDisplayMetrics();
+        // DisplayMetrics metrics = super.getReactApplicationContext().getResources().getDisplayMetrics();
         int screenWidth = metrics.widthPixels;
         int screenHeight = metrics.heightPixels;
         int screenDensity = metrics.densityDpi;
