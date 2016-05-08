@@ -139,9 +139,9 @@ implements ActivityEventListener {
       // MediaFormat format = MediaFormat.createVideoFormat(VIDEO_MIME_TYPE,VIDEO_WIDTH, VIDEO_HEIGHT);
 
       // AVC works best with pixel lengths rounded to nearest 10 other it cause formating problems
-      int width = (int) Math.floor(metrics.widthPixels/10) * 10; // Returns width to nearest 10
-      int height = (int) Math.floor(metrics.heightPixels/10) * 10;
-      MediaFormat format = MediaFormat.createVideoFormat(VIDEO_MIME_TYPE, width, height);
+      /*int width = (int) Math.floor(metrics.widthPixels/10) * 10; // Returns width to nearest 10
+      int height = (int) Math.floor(metrics.heightPixels/10) * 10; */
+      MediaFormat format = MediaFormat.createVideoFormat(VIDEO_MIME_TYPE, VIDEO_WIDTH, VIDEO_HEIGHT);
       int frameRate = 30;
 
       // format.setInteger("rotation-degrees", 0);
