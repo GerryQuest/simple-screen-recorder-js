@@ -52,9 +52,12 @@ import com.facebook.react.bridge.Callback;
 public class RecordScreenModule extends ReactContextBaseJavaModule
 implements ActivityEventListener {
     private DisplayMetrics metrics;
-    private static final String VIDEO_MIME_TYPE = "video/avc";
-    private static final int VIDEO_WIDTH = 1280; // maybe try get screen hight and width
-    private static final int VIDEO_HEIGHT = 720;
+    private static final String VIDEO_MIME_TYPE = "video/mp4v-es";
+    private static final int VIDEO_WIDTH = 720; // maybe try get screen hight and width
+    private static final int VIDEO_HEIGHT = 1280;
+    private static final int VIRTUAL_WIDTH = 720;
+    private static final int VIRTUAL_HEIGHT = 1280;
+
 
     // Manages Retrieval of mediaProject Token and Applies the permission intent
     private MediaProjectionManager mMediaProjectionManager;
@@ -136,11 +139,12 @@ implements ActivityEventListener {
       // MediaFormat format = MediaFormat.createVideoFormat(VIDEO_MIME_TYPE,VIDEO_WIDTH, VIDEO_HEIGHT);
 
       // AVC works best with pixel lengths rounded to nearest 10 other it cause formating problems
-      /*int width = (int) Math.floor(metrics.widthPixels/10) * 10; // Returns width to nearest 10
-      int height = (int) Math.floor(metrics.heightPixels/10) * 10; */
-      MediaFormat format = MediaFormat.createVideoFormat(VIDEO_MIME_TYPE, VIDEO_WIDTH, VIDEO_HEIGHT);
+      int width = (int) Math.floor(metrics.widthPixels/10) * 10; // Returns width to nearest 10
+      int height = (int) Math.floor(metrics.heightPixels/10) * 10;
+      MediaFormat format = MediaFormat.createVideoFormat(VIDEO_MIME_TYPE, width, height);
       int frameRate = 30;
 
+      // format.setInteger("rotation-degrees", 0);
       // The following Properties are needed, the MediaCodec could failt without them
       format.setInteger(MediaFormat.KEY_COLOR_FORMAT,
         MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
@@ -212,7 +216,7 @@ implements ActivityEventListener {
           This virtualScreen is outputted to the surface of the Encoder, which in return
           becomes the input for the Muxer which outputs the file in the specified format.
          */
-        mMediaProjection.createVirtualDisplay("Recorded Display", screenWidth, screenHeight, screenDensity,
+        mMediaProjection.createVirtualDisplay("Recorded Display", VIRTUAL_WIDTH, VIRTUAL_HEIGHT, screenDensity,
                 DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR, mInputSurface,
                 null /*Callbacks*/, null /*Handler*/);
 
