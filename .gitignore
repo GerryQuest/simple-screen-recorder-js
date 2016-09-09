@@ -28,7 +28,9 @@ project.xcworkspace
 .gradle
 local.properties
 *.keystore
-android/
+#android/
+gradle.properties
+my-release-key.keystore
 
 # node.js
 #
