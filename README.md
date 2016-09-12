@@ -1,7 +1,7 @@
 Simple Screen Recorder JS (Experimental)
 An Android based screen recorder developed using a combination of React-native, JavaScript and Java.
 
-![GIF Image of Simple Screen Recorder in action](https://github.com/Eissek/simple-screen-recorder-js/blob/master/caps/demo1.gif)   
+![GIF Image of Simple Screen Recorder in action](https://github.com/MisterTerrific/simple-screen-recorder-js/blob/master/caps/demo1.gif)   
 
 ### Usage
 * Press on the red circular button to begin recording.  
@@ -15,4 +15,4 @@ Videos are stored in the directory of /sdcard/SimpleScreenVideos.
 
 ### APK   
 Tested on Android 5.1 (Lollipop).  
-![Download APK](https://github.com/Eissek/simple-screen-recorder-js/blob/master/app-release.apk)
+![Download APK](https://github.com/MisterTerrific/simple-screen-recorder-js/blob/master/app-release.apk)
