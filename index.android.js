@@ -21,6 +21,8 @@ import Dropdown from "react-native-dropdown-android";
 import Record from "./components/record";
 import DialogAndroid from "react-native-dialogs";
 import RecordScreen from "./components/recordscreen";
+import AppModule from './components/app-module';
+
 // import Stopwatch from "./components/stopwatch";
 // var Icon  = require("react-native-vector-icons/FontAwesome");
 // import * as Icon from "react-native-vector-icons/FontAwesome";
@@ -122,7 +124,9 @@ var SimpleScreenRecorder = React.createClass ({
     }
     
   },
-
+  exitApplication: function () {
+    AppModule.exit();
+  },
   componentWillMount: function () {
     this.setState({barsIcon: require("./Hamburger.png")});
     var thesource = Icon.getImageSource('rocket', 15, "#000000");
@@ -146,11 +150,20 @@ var SimpleScreenRecorder = React.createClass ({
   // },
 
   render: function () {
-    var navigationView = (
-      <View style={{flex:1, backgroundColor: "#FFF"}}>
-        <Text style={{fontSize: 15, margin: 10, textAlign: "left"}}>
-        "I'm In the Drawer YAY!"
+    const navigationView = (
+      <View style={{flex:1, backgroundColor: "#FFF", padding: 14,
+		    flexDirection: 'column', justifyContent:'space-between'}}>
+        <Text style={{fontSize: 20, /*margin: 17,*/ textAlign: "left"}}>
+	"Drawer is open"
         </Text>
+	<View>
+	<TouchableOpacity onPress={this.exitApplication}>
+	<Text style={{fontSize: 20, margin: 5, textAlign: "left"}}>
+	<Icon name="power-off" size={27} color="#000000"/>
+	{' '} Exit
+	</Text>
+	</TouchableOpacity>
+	</View>
       </View>
     );
     
