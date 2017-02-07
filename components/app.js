@@ -1,62 +1,53 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 
-import React, {
+import React, {Component} from 'react';
+import {
   AppRegistry,
-  Component,
   StyleSheet,
   Text,
   View,
   DrawerLayoutAndroid,
   ToolbarAndroid,
   TouchableOpacity,
-  Alert,
-  Navigator
+  Alert
 } from 'react-native';
 
 import Icon from "react-native-vector-icons/FontAwesome";
 import Dropdown from "react-native-dropdown-android";
-import Record from "./components/record";
+import Record from "./record";
 import DialogAndroid from "react-native-dialogs";
-import RecordScreen from "./components/recordscreen";
-import AppModule from './components/app-module';
-import App from './components/app';
+import RecordScreen from "./recordscreen";
+import AppModule from './app-module';
 
-// import Stopwatch from "./components/stopwatch";
-// var Icon  = require("react-native-vector-icons/FontAwesome");
-// import * as Icon from "react-native-vector-icons/FontAwesome";
+export default class App extends Component {
 
-// import {FontAwesome as Icon} from "react-native-vector-icons/FontAwesome";
-// import * as Icon from "react-native-vector-icons/FontAwesome";
-// import {Icon} from "react-native-vector-icons/FontAwesome";
-
-// var bars = (<Icon name="rocket" size={30} color="#FFF"/>);
-
-
-
-var SimpleScreenRecorder = React.createClass ({
-
-  getInitialState: function () {
-    return {
+  // getInitialState notsupported in ES6 classes
+/*  getInitialState () {
+   return {
+      recordingAvailable: false
+    }; 
+  }
+*/
+  constructor () {
+    super();
+    this.state = {
       recordingAvailable: false
     };
-  },
-  setRecordingAvailable: function (status) {
+  }
+  setRecordingAvailable (status) {
     this.setState({recordingAvailable: status});
-  },
-  toggleDrawer: function () {
-
-    this.refs['DRAWER'].openDrawer();
-  }, 
+  }
   
-  showPopupMenu: function () {
+  toggleDrawer () {
+    this.refs['DRAWER'].openDrawer();
+  }
+
+  showPopupMenu () {
     console.log("test");
-  },
-  showConfirmReplaceDialog: function (filename) {
-    var options = {
+  }
+  
+  showConfirmReplaceDialog (filename) {
+    let options = {
       title: "Confirm save as",
       content: filename +
 	" Already exits. Do you want to replace this file?",
@@ -66,26 +57,28 @@ var SimpleScreenRecorder = React.createClass ({
 						      (error) => {Alert.alert(error);});}
     };
 
-    var dialog = new DialogAndroid();
+    let dialog = new DialogAndroid();
     dialog.set(options);
     dialog.show();
     
-  },
-  parseFilename: function (filename) {
+  }
+
+  parseFilename (filename) {
     RecordScreen.saveAs(filename,
 			(error) => {Alert.alert(error);},
 		       () => {this.showConfirmReplaceDialog(filename);});
     
     // if fileRecorded has been set to true then saveAs else alert error
-  },
-  showSaveVideoDialog: function () {
+  }
+  
+  showSaveVideoDialog () {
     if (!this.state.recordingAvailable) {
       // return Alert.alert("Error", "No Recordings to save!",
       // 		 [{text: "OK", onPress: () => {console.log("OK");}}]);
       return Alert.alert("Error", "No Recording to save!");
     }
     
-    var options = {
+    let options = {
       title: "Save As",
       content: "Location: /sdcard/SimpleScreenVideos/",
       positiveText: 'OK',
@@ -95,18 +88,19 @@ var SimpleScreenRecorder = React.createClass ({
 	      callback: (filename) => { this.parseFilename(filename);}}
     };
 
-    var dialog = new DialogAndroid();
+    let  dialog = new DialogAndroid();
     dialog.set(options);
     dialog.show();
-  },
-  saveVideoDialog: function () {
+  }
+
+  saveVideoDialog () {
     Alert.alert("Save As", "Input",
 	       [{text: "Save",
 		 onPress: () => console.log("saved")},
 	       {text: "Cancel",
 		onPress: () => console.log("Canceled")}]);
-  } ,
-  onActionSelected: function (position) {
+  } 
+  onActionSelected (position) {
     if (position === 0) {
          console.log("test");
       var so = this.state.source;
@@ -125,12 +119,14 @@ var SimpleScreenRecorder = React.createClass ({
       
     }
     
-  },
-  exitApplication: function () {
+  }
+  
+  exitApplication  () {
     AppModule.exit();
-  },
-  componentWillMount: function () {
-    this.setState({barsIcon: require("./Hamburger.png")});
+  }
+
+  componentWillMount () {
+    this.setState({barsIcon: require("../Hamburger.png")});
     var thesource = Icon.getImageSource('rocket', 15, "#000000");
     this.setState({jj: thesource});
     // Icon.getImageSource('rocket', 15, "#000000").then((source) => Alert.alert("hi", JSON.stringify(source)));
@@ -141,39 +137,19 @@ var SimpleScreenRecorder = React.createClass ({
     this.setState({source: "heyesssssssss"});
     console.log(thesource);
     // this.setState({barsIcon: source})
-  },
-  componentDidMount: function () {
-     // Icon.getImageSource('rocket', 15, "#000000").then((source) => this.setState({ barsIcon: source }));
-    // Alert.alert("message", this.state.source);    
-  },
-  // shouldComponentUpdate: function () {
-
-    
-  // },
-
-  render: function () {
-    return (
-      <Navigator initialRoute={{index: 0}}
-	renderScene={ (route, navigator) => 
-	  
-	  <App onSaveAs={ () => {
-	    const nextIndex = route.index + 1;
-	    navigator.push ({
-	      title: 'scene ' + nextIndex,
-	      index: nextIndex
-	    });
-	  }}
-	    />
-	}
-	/>
-    );
   }
   
-/*  render: function () {
+  componentDidMount () {
+     // Icon.getImageSource('rocket', 15, "#000000").then((source) => this.setState({ barsIcon: source }));
+    // Alert.alert("message", this.state.source);    
+  }
+
+  
+  render () {
     const navigationView = (
       <View style={{flex:1, backgroundColor: "#FFF", padding: 14,
 		    flexDirection: 'column', justifyContent:'space-between'}}>
-        <Text style={{fontSize: 20, textAlign: "left"}}>
+        <Text style={{fontSize: 20, /*margin: 17,*/ textAlign: "left"}}>
 	"Drawer is open"
         </Text>
 	<View>
@@ -186,15 +162,15 @@ var SimpleScreenRecorder = React.createClass ({
 	</View>
       </View>
     );
-    
-   var popupMenu = (
+
+    let popupMenu = (
         <Dropdown style={{height: 20, width: 10}}
                 values={["choose one", "one", 2, 3, [5,6,7,8]]}
                 selected={"1"}
                 onChange={(data) => { console.log(data);}} />
      
-   );
-        
+    );
+    
     return (
       <DrawerLayoutAndroid
           drawerWidth={150}
@@ -227,29 +203,8 @@ var SimpleScreenRecorder = React.createClass ({
 	
         </DrawerLayoutAndroid>
     );
-  } */
-});
-
-
-// <View style={{flex:1, backgroundColor: "#FFFFFF", alignItems: "center"}}>
-//                 <View style={{flexDirection: "row",
-//                               backgroundColor: "#FFB700",
-//                               alignItems: "center",
-//                               alignSelf: "stretch",
-//                               height: 40,
-//                               justifyContent: "space-between" }}>
-
-//                         <TouchableOpacity onPress={this.toggleDrawer}>
-//                                 <Icon name="bars" size={15} color="#000000" style={{marginLeft: 10}}/>
-//                         </TouchableOpacity>
-//                          <Text style={{margin: 5, fontSize: 15, textAlign: "center"}}>
-                                
-//                                 Simple Screen Recorder
-//                         </Text>
-//                         <Icon name="ellipsis-v" size={15} color="#000000" style={{marginRight: 10}}/>
-//                 </View>
-
-//        </View>
+  }
+}
 
 
 const styles = StyleSheet.create({
@@ -289,5 +244,3 @@ const styles = StyleSheet.create({
     marginBottom: 5
   }
 });
-
-AppRegistry.registerComponent('SimpleScreenRecorder', () => SimpleScreenRecorder);
