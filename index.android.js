@@ -24,6 +24,8 @@ import DialogAndroid from "react-native-dialogs";
 import RecordScreen from "./components/recordscreen";
 import AppModule from './components/app-module';
 import App from './components/app';
+import SaveAs from './components/save-as';
+
 
 // import Stopwatch from "./components/stopwatch";
 // var Icon  = require("react-native-vector-icons/FontAwesome");
@@ -151,23 +153,24 @@ var SimpleScreenRecorder = React.createClass ({
     
   // },
 
+  renderScene: function (route, navigator) {
+    let routeid = route.id;
+    if (routeid === "main") {
+      return <App navigator={navigator} />;
+    } else if (routeid === "saveas") {
+      return <SaveAs navigator={navigator} />;
+    }
+  },
+  
   render: function () {
     return (
-      <Navigator initialRoute={{index: 0}}
-	renderScene={ (route, navigator) => 
-	  
-	  <App onSaveAs={ () => {
-	    const nextIndex = route.index + 1;
-	    navigator.push ({
-	      title: 'scene ' + nextIndex,
-	      index: nextIndex
-	    });
-	  }}
-	    />
-	}
+      <Navigator initialRoute={{id: "main"}}
+	renderScene={this.renderScene}
 	/>
     );
   }
+
+  
   
 /*  render: function () {
     const navigationView = (

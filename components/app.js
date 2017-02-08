@@ -33,6 +33,8 @@ export default class App extends Component {
     this.state = {
       recordingAvailable: false
     };
+    // Binding for this is always required
+    this.onActionSelected = this.onActionSelected.bind(this);
   }
   setRecordingAvailable (status) {
     this.setState({recordingAvailable: status});
@@ -111,7 +113,10 @@ export default class App extends Component {
       // Alert.alert("hi", JSON.stringify(so));
       // Alert.alert("hi", so.uri);
       // this.saveVideoDialog();
-      this.showSaveVideoDialog();
+      
+      /*this.showSaveVideoDialog(); */ // Uncomment this later on
+      // this.props.onSaveAs();
+      this.props.navigator.push({id: "saveas"});
       
     } else if (position === 1) {
       
