@@ -12,10 +12,10 @@ import {
   DrawerLayoutAndroid,
   ToolbarAndroid,
   TouchableOpacity,
-  Alert
+  ScrollView
 } from 'react-native';
 
-
+import FileExplorer from './file-explorer';
 
 export default class SaveAs extends Component {
   constructor () {
@@ -33,6 +33,9 @@ export default class SaveAs extends Component {
 	<TouchableOpacity onPress={this.popSaveAs}>
 	<Text style={{fontSize: 25}}>HEYE</Text>
 	</TouchableOpacity>
+	<ScrollView>
+	
+	</ScrollView>
       </View>
     );
   }
