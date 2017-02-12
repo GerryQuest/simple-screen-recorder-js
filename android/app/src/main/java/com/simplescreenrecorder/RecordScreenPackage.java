@@ -18,6 +18,7 @@ public class RecordScreenPackage implements ReactPackage {
     List<NativeModule> modules = new ArrayList<>();
     modules.add(new RecordScreenModule(reactContext));
     modules.add(new AppModule(reactContext));
+    modules.add(new FileExplorerModule(reactContext));
     return modules;
   }
 
