@@ -15,7 +15,7 @@ import {
   ScrollView
 } from 'react-native';
 
-import FileExplorer from './file-explorer';
+import FileExplorerComp from './file-explorer';
 
 export default class SaveAs extends Component {
   constructor () {
