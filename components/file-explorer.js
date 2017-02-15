@@ -32,8 +32,16 @@ export default class FileExplorerComp extends Component {
   async createRows () {
     // Map through array
     let dir = await this.getDirectories();
-    if (dir instanceof Array){
-      
+    if (dir instanceof Array) {
+      const listFiles = dir.map((file) => {
+	<View>
+	  <Text>{file.name}</Text>
+	  <Text>{file.modified}</Text>
+	  <Text>{file.path}</Text>
+	  <Text>{file.directory ? "Directory" : "File" }</Text>
+	</View>
+      });
+      return ({listFiles});
     }
   }
   
