@@ -16,9 +16,10 @@ export default class FileExplorerComp extends Component {
   constructor (props) {
     super();
     this.state = {directoryList: null,
-		  path: "C:\\Code\\"};
+		  path: "/sdcard/"};
     this.createRows = this.createRows.bind(this);
     this.getDirectories = this.getDirectories.bind(this);
+    this.genRows = this.genRows.bind(this);
   }
 
   componentWillMount () {
@@ -28,28 +29,57 @@ export default class FileExplorerComp extends Component {
     // });
     
   }
+  componentDidMount () {
+    this.getDirectories().done();
+  }
 
+  
+  genRows () {
+    let dir = this.state.directoryList;
+    if (dir instanceof Array) {
+      return (dir.map((file, index) => 
+  	  <View key={index}>
+  	  <Text>{file.name}</Text>
+  	  <Text>{file.modified}</Text>
+  	  <Text>{file.path}</Text>
+  	  <Text>{file.directory ? "Directory" : "File" }</Text>
+  	  </View>
+      ));
+      //return rows;
+    } else return (<Text>Nope</Text>);
+    
+  }
+  
   async createRows () {
     // Map through array
     let dir = await this.getDirectories();
     if (dir instanceof Array) {
-      const listFiles = dir.map((file) => {
-	<View>
-	  <Text>{file.name}</Text>
-	  <Text>{file.modified}</Text>
-	  <Text>{file.path}</Text>
-	  <Text>{file.directory ? "Directory" : "File" }</Text>
-	</View>
+      return dir.map((file) => {
+  	  <View>
+  	  <Text>{file.name}</Text>
+  	  <Text>{file.modified}</Text>
+  	  <Text>{file.path}</Text>
+  	  <Text>{file.directory ? "Directory" : "File" }</Text>
+  	  </View>
       });
-      return ({listFiles});
-    }
+      /*const listFiles = dir.map((file) => {
+  	<View>
+  	  <Text>{file.name}</Text>
+  	  <Text>{file.modified}</Text>
+  	  <Text>{file.path}</Text>
+  	  <Text>{file.directory ? "Directory" : "File" }</Text>
+  	</View>
+      });
+      return (<View>{listFiles}</View>); */
+    } else return [];
   }
+
   
   async getDirectories () {
 
     try {
       // Below shoudl return array
-      let dir = await FileExplorer.getDirectory("C:\\Code\\"); 
+      let dir = await FileExplorer.getDirectory(this.state.path); 
       this.setState ({directoryList: dir });
 
 //      this.createRows.bind(this);
@@ -57,7 +87,7 @@ export default class FileExplorerComp extends Component {
       // setState may not be needed,
       // because you can just return the array
       return dir;
-    } catch (e) {
+    } catch (e) { 
       //Alert.alert("Error", "Could not load path");
       Alert.alert("Error", e.message);
     }
@@ -65,7 +95,7 @@ export default class FileExplorerComp extends Component {
   
   generateFileRow () {
     let files = null;
-    FileExplorer.getDirectoryArray("C:\\Code\\"),
+    FileExplorer.getDirectoryArray(this.state.path),
     (msg) => {
       Alert.alert("Error", "Could not load path");
     },
@@ -79,8 +109,14 @@ export default class FileExplorerComp extends Component {
   }
   
   render () {
+    //const directoryRows = this.createRows(); // Returns promise object
+    const directoryRows = this.genRows();
+    
     return (
-      
+      <View>
+	<Text>C LANG GOLANG</Text>
+	{directoryRows }
+      </View>
     );
   }
 }

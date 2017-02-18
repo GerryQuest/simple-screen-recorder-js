@@ -34,7 +34,9 @@ export default class SaveAs extends Component {
 	<Text style={{fontSize: 25}}>HEYE</Text>
 	</TouchableOpacity>
 	<ScrollView>
-	
+	<FileExplorerComp>
+	WHAT
+	</FileExplorerComp>
 	</ScrollView>
       </View>
     );

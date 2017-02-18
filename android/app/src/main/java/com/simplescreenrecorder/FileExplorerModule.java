@@ -1,6 +1,7 @@
 package com.simplescreenrecorder;
 
 import android.app.Activity;
+import android.support.annotation.Nullable;
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.NativeModule; 
@@ -14,8 +15,10 @@ import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+
 import java.io.File;
-import java.io.Arrays;
+import java.util.Arrays;
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -41,9 +44,9 @@ public class FileExplorerModule extends ReactContextBaseJavaModule {
     }
     // private void sendEvent (ReactContext reactContext, String eventName, )
     
-    public WritableArray getListDirectories() {
+   /* public WritableArray getListDirectories() {
 	
-    }
+    } */
 
     
     public WritableArray listAllFiles(String path) {
@@ -58,9 +61,10 @@ public class FileExplorerModule extends ReactContextBaseJavaModule {
 	
 	File dir = new File(path);
 //	File dir = new File("C:\\Code\\");
-	File[] list = dir.listFiles();
-	Arrays.sort(list);
+	
 	try {
+	    File[] list = dir.listFiles();
+	    Arrays.sort(list);
 	    for (File f : list) {
 		String modified = DateFormat.getDateTimeInstance().format(f.lastModified());
 		WritableMap map = Arguments.createMap();
@@ -80,7 +84,7 @@ public class FileExplorerModule extends ReactContextBaseJavaModule {
 	    }
 	} catch (Exception e) {
 	    
-	    e.printStacktrace();
+	    e.printStackTrace();
 	    return null;
 	    
 	}
@@ -91,8 +95,12 @@ public class FileExplorerModule extends ReactContextBaseJavaModule {
 	return directories;
     }
 
+    /*
+       Old method that uses callbacks to return array of directories
+       and files. Probably should be removed or at leasted commented out.
+    */
     @ReactMethod
-    public void getDirectoryArray (String path, errorCallback, successCallback) {
+    public void getDirectoryArray (String path, Callback errorCallback, Callback successCallback) {
 
 	WritableArray files = listAllFiles(path);
 	if (files != null) {
