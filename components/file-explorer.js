@@ -11,15 +11,16 @@ import {Text,
 	Image, DeviceEventEmitter} from 'react-native';
 
 import FileExplorer from './modules/fexplorer-module';
+import Icon from "react-native-vector-icons/FontAwesome";
 
 export default class FileExplorerComp extends Component {
   constructor (props) {
     super();
     this.state = {directoryList: null,
 		  path: "/sdcard/"};
-    this.createRows = this.createRows.bind(this);
     this.getDirectories = this.getDirectories.bind(this);
     this.genRows = this.genRows.bind(this);
+    this.fileOrFolderIcon = this.fileOrFolderIcon.bind(this)
   }
 
   componentWillMount () {
@@ -33,16 +34,24 @@ export default class FileExplorerComp extends Component {
     this.getDirectories().done();
   }
 
-  
+  fileOrFolderIcon (file) {
+    const icon = file ? "folder-o" : "file";
+    return (<Icon name={icon} size={27} color="#000000"/>);
+  }
   genRows () {
     let dir = this.state.directoryList;
     if (dir instanceof Array) {
       return (dir.map((file, index) => 
-  	  <View key={index}>
-  	  <Text>{file.name}</Text>
-  	  <Text>{file.modified}</Text>
-  	  <Text>{file.path}</Text>
-  	  <Text>{file.directory ? "Directory" : "File" }</Text>
+  	  <View key={index} style={styles.row} >
+	  {this.fileOrFolderIcon(file.directory)}
+	  <View style={styles.rowDetails}>
+	  
+  	  <View style={styles.rowDetailsTop}><Text>{file.name}</Text></View>
+  	  <View style={styles.rowDetailsBottom}>
+	    <Text>{file.modified}</Text>
+  	    <Text>{file.path}</Text>
+	  </View>
+	  </View>
   	  </View>
       ));
       //return rows;
@@ -50,30 +59,6 @@ export default class FileExplorerComp extends Component {
     
   }
   
-  async createRows () {
-    // Map through array
-    let dir = await this.getDirectories();
-    if (dir instanceof Array) {
-      return dir.map((file) => {
-  	  <View>
-  	  <Text>{file.name}</Text>
-  	  <Text>{file.modified}</Text>
-  	  <Text>{file.path}</Text>
-  	  <Text>{file.directory ? "Directory" : "File" }</Text>
-  	  </View>
-      });
-      /*const listFiles = dir.map((file) => {
-  	<View>
-  	  <Text>{file.name}</Text>
-  	  <Text>{file.modified}</Text>
-  	  <Text>{file.path}</Text>
-  	  <Text>{file.directory ? "Directory" : "File" }</Text>
-  	</View>
-      });
-      return (<View>{listFiles}</View>); */
-    } else return [];
-  }
-
   
   async getDirectories () {
 
@@ -99,7 +84,7 @@ export default class FileExplorerComp extends Component {
     (msg) => {
       Alert.alert("Error", "Could not load path");
     },
-    (list) => { files = list;};
+    (list) =>  files = list;
     // Could be a problem with assiging files variable
     // because async means it does not wait to files var
     // may end up being null
@@ -120,3 +105,26 @@ export default class FileExplorerComp extends Component {
     );
   }
 }
+
+
+const styles = StyleSheet.create({
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    justifyContent: 'space-between'
+  },
+  rowDetails: {
+    flex:1,
+    flexDirection: 'column'
+  },
+  rowDetailsTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  rowDetailsBottom: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  }
+  
+});
